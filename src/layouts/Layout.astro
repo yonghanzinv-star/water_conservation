@@ -1,6 +1,7 @@
 ---
 import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
+import "../styles/global.css";
 
 interface Props {
   title?: string;
@@ -42,9 +43,6 @@ const {
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
-
-    <!-- Styles -->
-    <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body class="antialiased flex flex-col min-h-screen">
     <Header />
