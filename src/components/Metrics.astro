@@ -1,0 +1,54 @@
+---
+// Metrics Section Component
+
+const metrics = [
+    {
+        value: "10+",
+        label: "Years of Experience",
+        labelZh: "多年經驗",
+    },
+    {
+        value: "20+",
+        label: "Projects Completed",
+        labelZh: "完成專案",
+    },
+    {
+        value: "100%",
+        label: "Sustainable Focus",
+        labelZh: "永續焦點",
+    },
+    {
+        value: "AI",
+        label: "Driven Integration",
+        labelZh: "驅動整合",
+    },
+];
+---
+
+<section class="bg-bg-light py-16 lg:py-24">
+    <div class="max-w-7xl mx-auto px-6">
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+            <span class="section-label">實績紀錄</span>
+            <h2 class="text-3xl md:text-4xl font-bold text-text-title">
+                專業成果指標
+            </h2>
+        </div>
+
+        <!-- Metrics Grid -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+            {
+                metrics.map((metric, index) => (
+                    <div class="metric-card group">
+                        <div class="text-4xl md:text-5xl font-bold text-brand-primary mb-2 group-hover:scale-110 transition-transform duration-300">
+                            {metric.value}
+                        </div>
+                        <div class="text-sm font-medium text-text-muted uppercase tracking-wide">
+                            {metric.label}
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</section>

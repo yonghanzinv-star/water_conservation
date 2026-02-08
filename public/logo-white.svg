@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- Left curve -->
+  <path d="M50 150 Q30 100 60 60 Q70 40 60 30" fill="none" stroke="white" stroke-width="16" stroke-linecap="round" opacity="0.8"/>
+  
+  <!-- Bottom extension -->
+  <path d="M50 150 L50 170" fill="none" stroke="white" stroke-width="16" stroke-linecap="round" opacity="0.6"/>
+  
+  <!-- Circle -->
+  <circle cx="90" cy="40" r="16" fill="white" opacity="0.9"/>
+  
+  <!-- Main curve -->
+  <path d="M100 50 Q140 80 120 120 Q110 150 130 180" fill="none" stroke="white" stroke-width="16" stroke-linecap="round"/>
+  
+  <!-- Bottom curve -->
+  <path d="M110 140 Q130 160 160 170" fill="none" stroke="white" stroke-width="16" stroke-linecap="round" opacity="0.8"/>
+</svg>

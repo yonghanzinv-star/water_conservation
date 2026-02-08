@@ -1,0 +1,84 @@
+---
+// Expertise Section Component
+
+const expertiseAreas = [
+  {
+    iconColor: "olive",
+    icon: "chart",
+    title: "產品與專案管理",
+    description: "運用 Agile 與 OKRs 領導跨功能團隊，從概念到上線交付可擴展的數位解決方案。",
+    keywords: ["Agile", "Scrum", "Roadmap Planning"]
+  },
+  {
+    iconColor: "blue",
+    icon: "lightning",
+    title: "AI 整合與工程",
+    description: "應用機器學習與數據驅動洞察，優化工業流程與商業工作流程。",
+    keywords: ["LLMs", "Data Analytics", "Systems Engineering"]
+  },
+  {
+    iconColor: "green",
+    icon: "globe",
+    title: "永續創新",
+    description: "設計符合全球 ESG 標準的循環經濟模型與永續報告框架。",
+    keywords: ["ESG", "Circular Economy", "Carbon Management"]
+  }
+];
+---
+
+<section id="expertise" class="bg-white py-16 lg:py-24">
+  <div class="max-w-7xl mx-auto px-6">
+    
+    <!-- Section Header -->
+    <div class="text-center mb-12">
+      <span class="section-label">技能組合</span>
+      <h2 class="text-3xl md:text-4xl font-bold text-text-title">
+        核心專業領域
+      </h2>
+    </div>
+    
+    <!-- Expertise Cards Grid -->
+    <div class="grid md:grid-cols-3 gap-8">
+      {expertiseAreas.map((area) => (
+        <div class="card group">
+          <!-- Icon Box -->
+          <div class={`icon-box icon-box-${area.iconColor} mb-6`}>
+            {area.icon === "chart" && (
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            )}
+            {area.icon === "lightning" && (
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+              </svg>
+            )}
+            {area.icon === "globe" && (
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            )}
+          </div>
+          
+          <!-- Title -->
+          <h3 class="text-xl font-bold text-text-title mb-3 group-hover:text-brand-primary transition-colors">
+            {area.title}
+          </h3>
+          
+          <!-- Description -->
+          <p class="text-text-body mb-4 leading-relaxed">
+            {area.description}
+          </p>
+          
+          <!-- Keywords -->
+          <div class="flex flex-wrap">
+            {area.keywords.map((keyword) => (
+              <span class="keyword-tag">{keyword}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    
+  </div>
+</section>

@@ -1,0 +1,338 @@
+@import "tailwindcss";
+
+/* ========================================
+   禾騰技術 Design System
+   深藍 + 大地綠 配色
+   ======================================== */
+
+@theme {
+  /* Brand Colors - 水利科技 x 農業永續 */
+  --color-brand-blue: #1E3A5F;
+  --color-brand-blue-light: #2A4A73;
+  --color-brand-green: #2D5A27;
+  --color-brand-green-light: #3D7A37;
+
+  /* Accent Colors */
+  --color-accent-sky: #4A90A4;
+  --color-accent-olive: #9ACD32;
+  --color-accent-earth: #8B7355;
+
+  /* Background Colors */
+  --color-bg-light: #F5F7F6;
+  --color-bg-soft: #EBF0ED;
+  --color-bg-white: #FFFFFF;
+  --color-bg-dark: #1A1A1A;
+
+  /* Text Colors */
+  --color-text-title: #1A1A1A;
+  --color-text-body: #4A4A4A;
+  --color-text-muted: #6B7280;
+  --color-text-light: #9CA3AF;
+
+  /* Fonts */
+  --font-sans: 'Inter', 'Noto Sans TC', system-ui, sans-serif;
+}
+
+/* ========================================
+   Base Styles
+   ======================================== */
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text-body);
+  background-color: var(--color-bg-white);
+  line-height: 1.7;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+/* ========================================
+   Button Components
+   ======================================== */
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: var(--color-brand-blue);
+  color: white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-brand-blue-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: transparent;
+  color: var(--color-brand-blue);
+  border: 2px solid var(--color-brand-blue);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-brand-blue);
+  color: white;
+  transform: translateY(-2px);
+}
+
+.btn-green {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: var(--color-brand-green);
+  color: white;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-green:hover {
+  background-color: var(--color-brand-green-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(45, 90, 39, 0.3);
+}
+
+.btn-white {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.875rem 2rem;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 1rem;
+  background-color: white;
+  color: var(--color-brand-blue);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+}
+
+.btn-white:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* ========================================
+   Card Components
+   ======================================== */
+
+.card {
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+.card-bordered {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  border: 1px solid #E5E7EB;
+  transition: all 0.3s ease;
+}
+
+.card-bordered:hover {
+  border-color: var(--color-brand-blue);
+  box-shadow: 0 4px 12px rgba(30, 58, 95, 0.1);
+}
+
+/* ========================================
+   Icon Box Components
+   ======================================== */
+
+.icon-box {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-box-blue {
+  background-color: rgba(30, 58, 95, 0.1);
+  color: var(--color-brand-blue);
+}
+
+.icon-box-green {
+  background-color: rgba(45, 90, 39, 0.1);
+  color: var(--color-brand-green);
+}
+
+.icon-box-sky {
+  background-color: rgba(74, 144, 164, 0.1);
+  color: var(--color-accent-sky);
+}
+
+/* ========================================
+   Section Styles
+   ======================================== */
+
+.section-label {
+  display: inline-block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-brand-green);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 0.75rem;
+}
+
+.section-label-light {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.section-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .section-title {
+    font-size: 2.75rem;
+  }
+}
+
+/* ========================================
+   Navigation Styles
+   ======================================== */
+
+.nav-link {
+  font-weight: 500;
+  color: var(--color-text-body);
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: var(--color-brand-blue);
+  background-color: rgba(30, 58, 95, 0.05);
+}
+
+.nav-link.active {
+  color: var(--color-brand-blue);
+  font-weight: 600;
+}
+
+/* ========================================
+   Tag & Badge Components
+   ======================================== */
+
+.tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-brand-blue);
+  background-color: rgba(30, 58, 95, 0.08);
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+}
+
+.tag-green {
+  color: var(--color-brand-green);
+  background-color: rgba(45, 90, 39, 0.08);
+}
+
+/* ========================================
+   Animations
+   ======================================== */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* ========================================
+   List Styles
+   ======================================== */
+
+.list-check li {
+  position: relative;
+  padding-left: 1.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.list-check li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-brand-green);
+  border-radius: 50%;
+}
+
+/* ========================================
+   Page Header Banner
+   ======================================== */
+
+.page-banner {
+  background: linear-gradient(135deg, var(--color-brand-blue) 0%, var(--color-brand-blue-light) 100%);
+  padding: 4rem 0;
+  color: white;
+}
+
+.page-banner h1 {
+  color: white;
+}

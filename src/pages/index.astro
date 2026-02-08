@@ -1,17 +1,292 @@
 ---
+import Layout from "../layouts/Layout.astro";
 
+// 三大核心領域
+const expertise = [
+	{
+		icon: "water",
+		title: "流域管理與防災應用",
+		description: "結合水文分析與防災科技，建構坡地與河川的安全防護網。",
+		link: "/services#watershed",
+	},
+	{
+		icon: "agriculture",
+		title: "農業發展與水資源保育",
+		description: "透過智慧水資源調度與精準灌溉，推動農業環境的永續發展。",
+		link: "/services#agriculture",
+	},
+	{
+		icon: "sustainability",
+		title: "永續發展與景觀遊憩",
+		description: "融合景觀美學與淨零碳排策略，營造具備地方特色的遊憩環境。",
+		link: "/services#sustainability",
+	},
+];
+
+// 精選實績
+const highlights = [
+	{
+		category: "智慧防災",
+		title: "洪水預警及防汛整合作業",
+		client: "經濟部水利署",
+	},
+	{
+		category: "農業水利",
+		title: "擴大灌溉服務推動計畫",
+		client: "農業部農田水利署",
+	},
+	{
+		category: "景觀專案",
+		title: "體驗觀光地方旅遊環境營造",
+		client: "交通部觀光局",
+	},
+];
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout>
+	<!-- Hero Section -->
+	<section
+		class="relative bg-gradient-to-br from-brand-blue via-brand-blue-light to-brand-green min-h-[85vh] flex items-center overflow-hidden"
+	>
+		<!-- Background Pattern -->
+		<div class="absolute inset-0 opacity-10">
+			<div
+				class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-white/20 to-transparent"
+			>
+			</div>
+		</div>
+
+		<div class="relative max-w-7xl mx-auto px-6 py-20 lg:py-32">
+			<div class="max-w-3xl">
+				<!-- Badge -->
+				<div
+					class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-6"
+				>
+					<span class="text-sm font-medium text-white/90"
+						>成立於 2012 年 ・ 新北市新莊區</span
+					>
+				</div>
+
+				<!-- Main Headline -->
+				<h1
+					class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6"
+				>
+					以跨域工程與智慧科技，<br />
+					<span class="text-accent-olive">打造韌性永續未來</span>
+				</h1>
+
+				<!-- Sub-headline -->
+				<p class="text-xl text-white/85 max-w-2xl mb-8 leading-relaxed">
+					運用創新技術與自然涵養，解決複雜跨域議題，成為推動農業永續與公共韌性的關鍵力量。
+				</p>
+
+				<!-- CTA Buttons -->
+				<div class="flex flex-wrap gap-4">
+					<a href="/services" class="btn-white"> 探索專業服務 </a>
+					<a
+						href="/about"
+						class="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg font-semibold text-white border-2 border-white/30 hover:bg-white/10 transition-all"
+					>
+						認識禾騰
+						<svg
+							class="w-4 h-4"
+							fill="none"
+							stroke="currentColor"
+							viewBox="0 0 24 24"
+						>
+							<path
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								stroke-width="2"
+								d="M9 5l7 7-7 7"></path>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+
+		<!-- Decorative Elements -->
+		<div
+			class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-white to-transparent"
+		>
+		</div>
+	</section>
+
+	<!-- Mission Quote Section -->
+	<section class="py-16 lg:py-24 bg-white">
+		<div class="max-w-4xl mx-auto px-6 text-center">
+			<blockquote class="relative">
+				<svg
+					class="absolute -top-4 -left-4 w-16 h-16 text-brand-green/10"
+					fill="currentColor"
+					viewBox="0 0 24 24"
+				>
+					<path
+						d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"
+					></path>
+				</svg>
+				<p
+					class="text-2xl md:text-3xl text-text-title font-medium leading-relaxed mb-6"
+				>
+					帶著回饋土地的使命，運用工程結合新科技，搭配自然與文化的涵養，解決跨領域的複雜議題。
+				</p>
+				<cite class="text-lg text-brand-green font-semibold not-italic">
+					—— 禾騰技術
+				</cite>
+			</blockquote>
+		</div>
+	</section>
+
+	<!-- Core Expertise Section -->
+	<section class="py-16 lg:py-24 bg-bg-light">
+		<div class="max-w-7xl mx-auto px-6">
+			<!-- Section Header -->
+			<div class="text-center mb-12">
+				<span class="section-label">核心領域</span>
+				<h2 class="section-title">三大專業服務</h2>
+				<p class="text-text-body max-w-2xl mx-auto">
+					整合工程專業與創新科技，為政府機關與民間單位提供全方位解決方案
+				</p>
+			</div>
+
+			<!-- Expertise Cards -->
+			<div class="grid md:grid-cols-3 gap-8">
+				{
+					expertise.map((item) => (
+						<a href={item.link} class="card group cursor-pointer">
+							<div
+								class={`icon-box mb-6 ${item.icon === "water" ? "icon-box-blue" : item.icon === "agriculture" ? "icon-box-sky" : "icon-box-green"}`}
+							>
+								{item.icon === "water" && (
+									<svg
+										class="w-7 h-7"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"
+										/>
+									</svg>
+								)}
+								{item.icon === "agriculture" && (
+									<svg
+										class="w-7 h-7"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+										/>
+									</svg>
+								)}
+								{item.icon === "sustainability" && (
+									<svg
+										class="w-7 h-7"
+										fill="none"
+										stroke="currentColor"
+										viewBox="0 0 24 24"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
+										/>
+									</svg>
+								)}
+							</div>
+							<h3 class="text-xl font-bold text-text-title mb-3 group-hover:text-brand-blue transition-colors">
+								{item.title}
+							</h3>
+							<p class="text-text-body leading-relaxed mb-4">
+								{item.description}
+							</p>
+							<span class="inline-flex items-center text-brand-blue font-medium text-sm group-hover:gap-2 transition-all">
+								了解更多
+								<svg
+									class="w-4 h-4 ml-1"
+									fill="none"
+									stroke="currentColor"
+									viewBox="0 0 24 24"
+								>
+									<path
+										stroke-linecap="round"
+										stroke-linejoin="round"
+										stroke-width="2"
+										d="M9 5l7 7-7 7"
+									/>
+								</svg>
+							</span>
+						</a>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- Highlights Section -->
+	<section class="py-16 lg:py-24 bg-white">
+		<div class="max-w-7xl mx-auto px-6">
+			<!-- Section Header -->
+			<div
+				class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-12"
+			>
+				<div>
+					<span class="section-label">最新動態</span>
+					<h2 class="section-title">精選實績</h2>
+				</div>
+				<a href="/portfolio" class="btn-secondary text-sm py-2.5 px-5">
+					查看所有案例
+				</a>
+			</div>
+
+			<!-- Highlight Cards -->
+			<div class="grid md:grid-cols-3 gap-6">
+				{
+					highlights.map((item) => (
+						<div class="card-bordered">
+							<span class="tag tag-green mb-4">
+								{item.category}
+							</span>
+							<h3 class="text-lg font-bold text-text-title mb-2">
+								{item.title}
+							</h3>
+							<p class="text-sm text-text-muted">{item.client}</p>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA Section -->
+	<section
+		class="py-16 lg:py-24 bg-gradient-to-br from-brand-green to-brand-green-light"
+	>
+		<div class="max-w-4xl mx-auto px-6 text-center">
+			<h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+				攜手打造永續未來
+			</h2>
+			<p class="text-lg text-white/85 max-w-2xl mx-auto mb-8">
+				無論是防災規劃、農業水利或永續發展專案，我們都樂於提供專業諮詢。
+			</p>
+			<div class="flex flex-wrap justify-center gap-4">
+				<a href="/contact" class="btn-white"> 聯絡我們 </a>
+				<a
+					href="/careers"
+					class="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg font-semibold text-white border-2 border-white/30 hover:bg-white/10 transition-all"
+				>
+					加入團隊
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>

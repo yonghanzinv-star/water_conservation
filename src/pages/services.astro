@@ -1,0 +1,153 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const services = [
+  {
+    id: "watershed",
+    icon: "water",
+    title: "流域管理與防災應用",
+    subtitle: "Watershed Management & Disaster Prevention",
+    description: "結合水文分析與防災科技，建構坡地與河川的安全防護網。",
+    items: [
+      {
+        category: "集水區治理",
+        details: ["野溪坑溝整治", "崩塌地調查", "土砂收支平衡與輸砂演算"]
+      },
+      {
+        category: "智慧防災",
+        details: ["洪水預警模式建置", "土石流防災整備應變", "河川防汛整合"]
+      },
+      {
+        category: "法規與檢測",
+        details: ["山坡地劃定檢討", "特定水土保持區通盤檢討", "水利設施安全評估"]
+      }
+    ]
+  },
+  {
+    id: "agriculture",
+    icon: "agriculture",
+    title: "農業發展與水資源保育",
+    subtitle: "Agricultural Development & Water Conservation",
+    description: "透過智慧水資源調度與精準灌溉，推動農業環境的永續發展。",
+    items: [
+      {
+        category: "水資源利用",
+        details: ["擴大灌溉服務規劃", "水源調查", "跨區水資源調度"]
+      },
+      {
+        category: "智慧灌溉",
+        details: ["精準灌溉機制建立", "作物需水特性研究", "智慧系統推廣"]
+      },
+      {
+        category: "生態友善",
+        details: ["蓄水設施工程規劃", "低衝擊開發 (LID)", "工程生態檢核"]
+      }
+    ]
+  },
+  {
+    id: "sustainability",
+    icon: "sustainability",
+    title: "永續發展與景觀遊憩",
+    subtitle: "Sustainable Development & Landscape Recreation",
+    description: "融合景觀美學與淨零碳排策略，營造具備地方特色的遊憩環境。",
+    items: [
+      {
+        category: "永續淨零",
+        details: ["SDGs 應用推動", "淨零碳排策略研擬", "低碳設計管理"]
+      },
+      {
+        category: "景觀營造",
+        details: ["觀光遊憩資源盤點", "旅遊環境品質提升", "水圳步道與濕地營造"]
+      },
+      {
+        category: "專案管理",
+        details: ["政府服務獎申請", "金質獎輔導", "國家永續發展獎"]
+      }
+    ]
+  }
+];
+---
+
+<Layout title="專業服務 - 禾騰技術">
+  <!-- Page Banner -->
+  <section class="page-banner">
+    <div class="max-w-7xl mx-auto px-6">
+      <span class="section-label section-label-light">Services</span>
+      <h1 class="text-4xl md:text-5xl font-bold">專業服務</h1>
+      <p class="text-xl text-white/80 mt-4 max-w-2xl">
+        整合工程專業與創新科技，提供全方位解決方案
+      </p>
+    </div>
+  </section>
+  
+  <!-- Services Sections -->
+  {services.map((service, index) => (
+    <section id={service.id} class={`py-16 lg:py-24 ${index % 2 === 0 ? 'bg-white' : 'bg-bg-light'}`}>
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-3 gap-12">
+          <!-- Service Header -->
+          <div class="lg:sticky lg:top-24 lg:self-start">
+            <div class={`icon-box mb-6 ${service.icon === 'water' ? 'icon-box-blue' : service.icon === 'agriculture' ? 'icon-box-sky' : 'icon-box-green'}`}>
+              {service.icon === 'water' && (
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+                </svg>
+              )}
+              {service.icon === 'agriculture' && (
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+              )}
+              {service.icon === 'sustainability' && (
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                </svg>
+              )}
+            </div>
+            <h2 class="text-2xl lg:text-3xl font-bold text-text-title mb-2">
+              {service.title}
+            </h2>
+            <p class="text-sm text-text-muted mb-4">{service.subtitle}</p>
+            <p class="text-text-body leading-relaxed">
+              {service.description}
+            </p>
+          </div>
+          
+          <!-- Service Items -->
+          <div class="lg:col-span-2 grid md:grid-cols-3 gap-6">
+            {service.items.map((item) => (
+              <div class="card-bordered">
+                <h3 class="font-bold text-text-title mb-4">{item.category}</h3>
+                <ul class="space-y-2">
+                  {item.details.map((detail) => (
+                    <li class="flex items-start gap-2 text-sm text-text-body">
+                      <svg class="w-4 h-4 mt-0.5 text-brand-green shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                      </svg>
+                      {detail}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  ))}
+  
+  <!-- CTA -->
+  <section class="py-16 lg:py-24 bg-brand-blue">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+        需要專業諮詢？
+      </h2>
+      <p class="text-lg text-white/85 max-w-2xl mx-auto mb-8">
+        我們的團隊隨時準備為您的專案提供最佳解決方案
+      </p>
+      <a href="/contact" class="btn-white">
+        聯絡我們
+      </a>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,148 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const portfolioCategories = [
+  {
+    id: "disaster",
+    title: "智慧防災",
+    icon: "shield",
+    projects: [
+      {
+        title: "洪水預警及防汛整合作業",
+        client: "經濟部水利署第九河川分署",
+        year: "113-114",
+        description: "建置轄區洪水預警模式及整合防汛作業系統"
+      },
+      {
+        title: "土石流及大規模崩塌防災整備與緊急應變計畫",
+        client: "農業部農村發展及水土保持署花蓮分署",
+        year: "112-113",
+        description: "規劃土石流防災整備及緊急應變機制"
+      }
+    ]
+  },
+  {
+    id: "irrigation",
+    title: "農業水利擴大灌溉",
+    icon: "water",
+    projects: [
+      {
+        title: "通霄、大湖地區擴大灌溉服務推動計畫",
+        client: "農業部農田水利署苗栗管理處",
+        year: "112-114",
+        description: "推動苗栗地區擴大灌溉服務"
+      },
+      {
+        title: "瑞穗鄉舞鶴地區擴大灌溉服務",
+        client: "農業部農田水利署花蓮管理處",
+        year: "111-113",
+        description: "規劃花蓮瑞穗舞鶴地區灌溉系統"
+      },
+      {
+        title: "臺東縱谷沿線擴大灌溉服務推動",
+        client: "農業部農田水利署臺東管理處",
+        year: "112-114",
+        description: "推動臺東縱谷地區擴大灌溉"
+      }
+    ]
+  },
+  {
+    id: "landscape",
+    title: "景觀與專案管理",
+    icon: "tree",
+    projects: [
+      {
+        title: "體驗觀光地方旅遊環境營造計畫專案管理",
+        client: "交通部觀光署",
+        year: "112-114",
+        description: "協助觀光署推動地方旅遊環境營造"
+      },
+      {
+        title: "重要廊帶亮點營造計畫專案管理服務",
+        client: "交通部觀光署",
+        year: "111-113",
+        description: "規劃管理重要觀光廊帶亮點計畫"
+      },
+      {
+        title: "雪霧鬧野溪資源盤查與步道活化",
+        client: "桃園市政府風景區管理處",
+        year: "112",
+        description: "盤點復興區野溪資源並活化步道系統"
+      }
+    ]
+  }
+];
+---
+
+<Layout title="實績案例 - 禾騰技術">
+  <!-- Page Banner -->
+  <section class="page-banner">
+    <div class="max-w-7xl mx-auto px-6">
+      <span class="section-label section-label-light">Portfolio</span>
+      <h1 class="text-4xl md:text-5xl font-bold">實績案例</h1>
+      <p class="text-xl text-white/80 mt-4 max-w-2xl">
+        精選近年代表性計畫，展現跨域整合能力
+      </p>
+    </div>
+  </section>
+  
+  <!-- Portfolio Categories -->
+  {portfolioCategories.map((category, index) => (
+    <section id={category.id} class={`py-16 lg:py-20 ${index % 2 === 0 ? 'bg-white' : 'bg-bg-light'}`}>
+      <div class="max-w-7xl mx-auto px-6">
+        <!-- Category Header -->
+        <div class="flex items-center gap-4 mb-8">
+          <div class="icon-box icon-box-blue">
+            {category.icon === 'shield' && (
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+              </svg>
+            )}
+            {category.icon === 'water' && (
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"></path>
+              </svg>
+            )}
+            {category.icon === 'tree' && (
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+              </svg>
+            )}
+          </div>
+          <h2 class="text-2xl font-bold text-text-title">{category.title}</h2>
+        </div>
+        
+        <!-- Project Cards -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {category.projects.map((project) => (
+            <div class="card bg-white group">
+              <div class="flex items-center justify-between mb-4">
+                <span class="tag">{project.year}</span>
+              </div>
+              <h3 class="text-lg font-bold text-text-title mb-2 group-hover:text-brand-blue transition-colors">
+                {project.title}
+              </h3>
+              <p class="text-sm text-text-muted mb-3">{project.client}</p>
+              <p class="text-sm text-text-body">{project.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  ))}
+  
+  <!-- CTA -->
+  <section class="py-16 lg:py-24 bg-brand-green">
+    <div class="max-w-4xl mx-auto px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+        想了解更多專案細節？
+      </h2>
+      <p class="text-lg text-white/85 max-w-2xl mx-auto mb-8">
+        歡迎與我們聯繫，討論您的專案需求
+      </p>
+      <a href="/contact" class="btn-white">
+        聯絡我們
+      </a>
+    </div>
+  </section>
+</Layout>

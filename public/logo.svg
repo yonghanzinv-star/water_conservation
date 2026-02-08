@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <!-- 左側藍色弧線 -->
+  <path d="M55 160 Q25 110 50 55 Q60 35 50 20" fill="none" stroke="#3AA0D8" stroke-width="18" stroke-linecap="round"/>
+  
+  <!-- 左下灰色直線 -->
+  <path d="M55 160 L55 185" fill="none" stroke="#808080" stroke-width="18" stroke-linecap="round"/>
+  
+  <!-- 紅色圓點 -->
+  <circle cx="95" cy="35" r="18" fill="#E63128"/>
+  
+  <!-- 主體綠色弧線 -->
+  <path d="M105 50 Q150 85 125 130 Q115 165 140 195" fill="none" stroke="#1B7B34" stroke-width="18" stroke-linecap="round"/>
+  
+  <!-- 右下土黃色弧線 -->
+  <path d="M115 150 Q140 175 175 185" fill="none" stroke="#B8860B" stroke-width="18" stroke-linecap="round"/>
+</svg>
