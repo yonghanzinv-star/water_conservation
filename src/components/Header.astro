@@ -5,6 +5,7 @@ const navLinks = [
     { href: "/about", label: "關於禾騰" },
     { href: "/services", label: "專業服務" },
     { href: "/portfolio", label: "實績案例" },
+    { href: "/sustainability", label: "永續認養" },
     { href: "/careers", label: "加入我們" },
     { href: "/contact", label: "聯絡我們" },
 ];
@@ -30,7 +31,7 @@ const currentPath = Astro.url.pathname;
             </a>
 
             <!-- Desktop Navigation -->
-            <nav class="hidden lg:flex items-center gap-1">
+            <nav class="hidden lg:flex items-center gap-1 ml-auto">
                 {
                     navLinks.map((link) => (
                         <a
@@ -42,14 +43,6 @@ const currentPath = Astro.url.pathname;
                     ))
                 }
             </nav>
-
-            <!-- CTA Button (Desktop) -->
-            <a
-                href="/contact"
-                class="hidden lg:inline-flex btn-primary text-sm py-2.5 px-5"
-            >
-                聯繫我們
-            </a>
 
             <!-- Mobile Menu Button -->
             <button

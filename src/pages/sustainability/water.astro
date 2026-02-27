@@ -1,0 +1,85 @@
+---
+import "../../styles/global.css";
+import "../../styles/water-conservation.css";
+import WaterConservation from "../../components/water-conservation/WaterConservation";
+---
+
+<html lang="zh-Hant-TW">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+        />
+        <link rel="icon" type="image/png" href="/favicon.png" />
+        <title>水源保育認養計畫 - 禾騰技術</title>
+        <meta
+            name="description"
+            content="石門水庫水源地永續計畫，透過企業認養在地農場推動友善耕作，從源頭守護水質。"
+        />
+
+        <!-- Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700;900&display=swap"
+            rel="stylesheet"
+        />
+
+        <style is:global>
+            body {
+                font-family: "Noto Sans TC", sans-serif;
+                -webkit-font-smoothing: antialiased;
+                margin: 0;
+                overflow: hidden;
+                background-color: #0f172a;
+                color: #f8fafc;
+            }
+
+            /* Back button floating */
+            .wc-back-btn {
+                position: fixed;
+                top: 1.25rem;
+                left: 1.25rem;
+                z-index: 100;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                padding: 0.625rem 1.25rem;
+                background: rgba(255, 255, 255, 0.15);
+                backdrop-filter: blur(12px);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 9999px;
+                color: white;
+                font-weight: 700;
+                font-size: 0.875rem;
+                text-decoration: none;
+                transition: all 0.3s ease;
+            }
+            .wc-back-btn:hover {
+                background: rgba(255, 255, 255, 0.25);
+                transform: translateX(-2px);
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Back to sustainability page -->
+        <a href="/sustainability" class="wc-back-btn">
+            <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            >
+                <path d="m15 18-6-6 6-6"></path>
+            </svg>
+            返回永續認養
+        </a>
+
+        <WaterConservation client:only="react" />
+    </body>
+</html>
