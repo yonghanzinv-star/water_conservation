@@ -5,17 +5,11 @@
 
 /* Full-screen snap scrolling */
 .wc-snap-container {
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
-    height: 100vh;
-    -webkit-overflow-scrolling: touch;
+    width: 100%;
 }
 
 .wc-snap-section {
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
     min-height: 100vh;
-    height: 100vh;
     width: 100%;
     display: flex;
     flex-direction: column;

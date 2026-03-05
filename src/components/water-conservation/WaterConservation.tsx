@@ -68,8 +68,8 @@ const siteContent: SiteContent = {
     },
     footer: {
         aboutUs: '本計畫專注於透過友善耕作保護集水區環境，連結企業與農民，創造環境、社會與產業三贏。',
-        contactEmail: 'sustainable@shimen.project.tw',
-        contactPhone: '(03) 123-4567',
+        contactEmail: 'yhansum@hetengtech.com',
+        contactPhone: '(02) 8521-9296 ext. 17 岑先生',
     }
 };
 
@@ -79,6 +79,7 @@ const siteContent: SiteContent = {
 const WaterConservation: React.FC = () => {
     const [selectedFarmer, setSelectedFarmer] = useState<Farmer | null>(null);
     const [selectedCorp, setSelectedCorp] = useState<Corporation | null>(null);
+    const [showPhoneAlert, setShowPhoneAlert] = useState(false);
 
     const getFarmerName = (id: string) => farmers.find(f => f.id === id)?.name || '未知農場';
     const homePageContent = siteContent.homePage;
@@ -103,7 +104,7 @@ const WaterConservation: React.FC = () => {
                             dangerouslySetInnerHTML={{ __html: homePageContent.heroSubtitle }}
                         ></p>
 
-                        <a href="/contact" className="flex items-center gap-3 px-8 py-5 bg-sky-500 text-white rounded-2xl font-black text-xl shadow-[0_20px_40px_rgba(14,165,233,0.3)] hover:bg-sky-400 active:scale-95 transition-all no-underline">
+                        <a href={`mailto:${siteContent.footer.contactEmail}`} className="flex items-center gap-3 px-8 py-5 bg-sky-500 text-white rounded-2xl font-black text-xl shadow-[0_20px_40px_rgba(14,165,233,0.3)] hover:bg-sky-400 active:scale-95 transition-all no-underline">
                             <Mail size={24} /> 立即參與計畫
                         </a>
                     </div>
@@ -293,13 +294,34 @@ const WaterConservation: React.FC = () => {
                         <a href={`mailto:${siteContent.footer.contactEmail}`} className="flex items-center justify-center gap-4 py-6 bg-sky-500 text-white rounded-[2rem] font-black text-xl shadow-[0_30px_60px_rgba(14,165,233,0.3)] active:scale-95 transition-all no-underline">
                             <Mail size={24} /> 聯繫合作專員
                         </a>
-                        <a href={`tel:${siteContent.footer.contactPhone}`} className="flex items-center justify-center gap-4 py-6 border-2 border-white/10 text-white/70 rounded-[2rem] font-bold text-lg active:scale-95 transition-all no-underline">
+                        <button
+                            onClick={() => setShowPhoneAlert(true)}
+                            className="flex items-center justify-center gap-4 py-6 border-2 border-white/10 text-white/70 rounded-[2rem] font-bold text-lg active:scale-95 transition-all w-full"
+                        >
                             <Phone size={20} /> 專線電話諮詢
-                        </a>
+                        </button>
                     </div>
 
+                    {showPhoneAlert && (
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 bg-slate-950/80 backdrop-blur-sm">
+                            <div className="bg-slate-900 border border-white/10 p-10 rounded-[2.5rem] max-w-sm w-full text-center shadow-2xl">
+                                <div className="mx-auto w-16 h-16 bg-sky-500/20 text-sky-400 rounded-full flex items-center justify-center mb-6">
+                                    <Phone size={32} />
+                                </div>
+                                <h3 className="text-xl font-black text-white mb-4">電話諮詢資訊</h3>
+                                <p className="text-slate-300 mb-8 leading-relaxed">請撥打 <br /><span className="text-white font-black text-xl">{siteContent.footer.contactPhone}</span></p>
+                                <button
+                                    onClick={() => setShowPhoneAlert(false)}
+                                    className="w-full py-4 bg-sky-500 text-white rounded-2xl font-black"
+                                >
+                                    確定
+                                </button>
+                            </div>
+                        </div>
+                    )}
+
                     <div className="mt-24 pt-12 border-t border-white/5 text-[10px] font-black text-white/20 tracking-[0.8em] uppercase">
-                        &copy; 2024 Shimen Project. Water Sustainability Action.
+                        &copy; 2026 禾騰技術股份有限公司
                     </div>
                 </div>
             </section>
