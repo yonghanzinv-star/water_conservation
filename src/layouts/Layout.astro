@@ -45,12 +45,6 @@ const {
     />
   </head>
   <body class="antialiased flex flex-col min-h-screen">
-    <!-- 暫時導向：僅開放 /sustainability/water，其餘頁面自動跳轉 -->
-    <script is:inline>
-      if (window.location.pathname !== '/sustainability/water') {
-        window.location.replace('/sustainability/water');
-      }
-    </script>
     <Header />
     <main class="flex-grow">
       <slot />
