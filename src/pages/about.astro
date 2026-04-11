@@ -23,15 +23,21 @@ const philosophy = [
 
 <Layout title="關於禾騰 - 禾騰技術">
     <!-- Page Banner -->
-    <section class="page-banner">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="page-banner relative">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
             <span class="section-label section-label-light">About Us</span>
             <h1 class="text-4xl md:text-5xl font-bold">關於禾騰</h1>
         </div>
+		<!-- Decorative Elements: 波浪形分界線 -->
+		<div class="absolute bottom-[-1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+			<svg class="relative block w-full h-[30px] md:h-[60px]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+				<path d="M0,64L80,53.3C160,43,320,21,480,26.7C640,32,800,64,960,69.3C1120,75,1280,53,1360,42.7L1440,32L1440,120L0,120Z" fill="#FFFFFF"></path>
+			</svg>
+		</div>
     </section>
 
     <!-- Company Profile -->
-    <section class="py-16 lg:py-24 bg-white">
+    <section class="py-16 lg:py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
                 <!-- Image -->
@@ -98,10 +104,16 @@ const philosophy = [
                 </div>
             </div>
         </div>
+		<!-- Decorative Elements: 波浪形分界線 -->
+		<div class="absolute bottom-[-1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+			<svg class="relative block w-full h-[30px] md:h-[60px]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+				<path d="M0,64L80,53.3C160,43,320,21,480,26.7C640,32,800,64,960,69.3C1120,75,1280,53,1360,42.7L1440,32L1440,120L0,120Z" fill="#F5F7F6"></path>
+			</svg>
+		</div>
     </section>
 
     <!-- Vision & Mission -->
-    <section class="py-16 lg:py-24 bg-bg-light">
+    <section class="py-16 lg:py-24 bg-bg-light relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-8">
                 <!-- Vision -->
@@ -153,12 +165,19 @@ const philosophy = [
                         帶著回饋土地的使命，運用工程結合新科技，搭配自然與文化的涵養，解決跨領域的複雜議題。
                     </p>
                 </div>
+                </div>
             </div>
         </div>
+		<!-- Decorative Elements: 波浪形分界線 -->
+		<div class="absolute bottom-[-1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+			<svg class="relative block w-full h-[30px] md:h-[60px]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+				<path d="M0,64L80,53.3C160,43,320,21,480,26.7C640,32,800,64,960,69.3C1120,75,1280,53,1360,42.7L1440,32L1440,120L0,120Z" fill="#FFFFFF"></path>
+			</svg>
+		</div>
     </section>
 
     <!-- Philosophy -->
-    <section class="py-16 lg:py-24 bg-white">
+    <section class="py-16 lg:py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
                 <span class="section-label">經營理念</span>
@@ -183,5 +202,11 @@ const philosophy = [
                 }
             </div>
         </div>
+		<!-- Decorative Elements: 與 Footer 接合的波浪 -->
+		<div class="absolute bottom-[-1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none text-brand-blue">
+			<svg class="relative block w-full h-[40px] md:h-[80px]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+				<path d="M0,32L80,48C160,64,320,96,480,96C640,96,800,64,960,53.3C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="currentColor"></path>
+			</svg>
+		</div>
     </section>
 </Layout>

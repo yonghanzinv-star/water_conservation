@@ -7,8 +7,8 @@ import Layout from "../../layouts/Layout.astro";
     description="禾騰技術協助政府部門推動永續認養企業媒合服務，促進公私協力，共創環境、社會與經濟的三贏局面。"
 >
     <!-- Page Banner -->
-    <section class="page-banner">
-        <div class="max-w-7xl mx-auto px-6">
+    <section class="page-banner relative">
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
             <span class="section-label section-label-light"
                 >Sustainability Adoption</span
             >
@@ -17,10 +17,16 @@ import Layout from "../../layouts/Layout.astro";
                 禾騰技術協助政府部門媒合企業資源，透過認養機制推動環境永續行動，打造企業、政府與社區三贏的合作模式。
             </p>
         </div>
+		<!-- Decorative Elements: 波浪形分界線 -->
+		<div class="absolute bottom-[-1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+			<svg class="relative block w-full h-[30px] md:h-[60px]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+				<path d="M0,64L80,53.3C160,43,320,21,480,26.7C640,32,800,64,960,69.3C1120,75,1280,53,1360,42.7L1440,32L1440,120L0,120Z" fill="#FFFFFF"></path>
+			</svg>
+		</div>
     </section>
 
     <!-- Service Description -->
-    <section class="py-16 lg:py-24 bg-white">
+    <section class="py-16 lg:py-24 bg-white relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
@@ -192,10 +198,16 @@ import Layout from "../../layouts/Layout.astro";
                 </div>
             </div>
         </div>
+		<!-- Decorative Elements: 波浪形分界線 -->
+		<div class="absolute bottom-[-1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none">
+			<svg class="relative block w-full h-[30px] md:h-[60px]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+				<path d="M0,64L80,53.3C160,43,320,21,480,26.7C640,32,800,64,960,69.3C1120,75,1280,53,1360,42.7L1440,32L1440,120L0,120Z" fill="#F5F7F6"></path>
+			</svg>
+		</div>
     </section>
 
     <!-- Adoption Types -->
-    <section class="py-16 lg:py-24 bg-bg-light">
+    <section class="py-16 lg:py-24 bg-bg-light relative">
         <div class="max-w-7xl mx-auto px-6">
             <div class="text-center mb-12">
                 <span class="section-label">認養類型</span>
@@ -292,27 +304,46 @@ import Layout from "../../layouts/Layout.astro";
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section
-        class="py-16 lg:py-24 bg-gradient-to-br from-brand-green to-brand-green-light"
-    >
-        <div class="max-w-4xl mx-auto px-6 text-center">
-            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
-                攜手推動永續行動
-            </h2>
-            <p class="text-lg text-white/85 max-w-2xl mx-auto mb-8">
-                無論您是尋求 ESG
-                實踐方案的企業，還是希望推動地方永續發展的政府單位，我們都期待與您合作。
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="/contact" class="btn-white"> 聯絡我們 </a>
-                <a
-                    href="/services"
-                    class="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg font-semibold text-white border-2 border-white/30 hover:bg-white/10 transition-all"
-                >
-                    了解專業服務
-                </a>
-            </div>
-        </div>
-    </section>
+	<!-- CTA Section -->
+	<section
+		class="py-32 lg:py-40 bg-gradient-to-br from-brand-blue via-brand-green to-[#1a3821] relative overflow-hidden"
+	>
+		<!-- Decorative Elements: 向下漸層波浪 -->
+		<div class="absolute top-[-1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none transform rotate-180">
+			<svg class="relative block w-full h-[60px] md:h-[100px]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+				<path d="M0,64L80,69.3C160,75,320,85,480,80C640,75,800,53,960,48C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="#F5F7F6"></path>
+			</svg>
+		</div>
+
+		<!-- 漂浮圈圈 -->
+		<div class="absolute top-0 right-0 -mr-20 -mt-20 w-80 h-80 rounded-full border-[20px] border-white/5 pointer-events-none" style="animation: float-circle 6s ease-in-out infinite;"></div>
+		<div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full border-[20px] border-white/5 pointer-events-none" style="animation: float-circle 7s ease-in-out infinite reverse;"></div>
+
+		<div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+			<h2 class="text-4xl md:text-5xl font-bold text-white mb-8 drop-shadow-md">
+				攜手推動永續行動
+			</h2>
+			<p class="text-xl text-white/90 max-w-2xl mx-auto mb-12 font-light">
+				無論您是尋求 ESG 實踐方案的企業，還是希望推動地方永續發展的政府單位，我們都期待與您合作。
+			</p>
+			<div class="flex flex-wrap justify-center gap-6">
+				<a href="/contact" class="inline-flex items-center justify-center px-10 py-4 rounded-xl font-bold text-brand-blue bg-white hover:scale-105 transition-transform shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+					聯絡我們
+				</a>
+				<a
+					href="/services"
+					class="inline-flex items-center gap-2 px-10 py-4 rounded-xl font-bold text-white border border-white/30 hover:bg-white/10 hover:scale-105 transition-transform"
+				>
+					了解專業服務
+				</a>
+			</div>
+		</div>
+
+		<!-- Decorative Elements: 與 Footer 接合的波浪 -->
+		<div class="absolute bottom-[-1px] left-0 right-0 w-full overflow-hidden leading-none z-10 pointer-events-none text-brand-blue">
+			<svg class="relative block w-full h-[40px] md:h-[80px]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+				<path d="M0,32L80,48C160,64,320,96,480,96C640,96,800,64,960,53.3C1120,43,1280,53,1360,58.7L1440,64L1440,120L1360,120C1280,120,1120,120,960,120C800,120,640,120,480,120C320,120,160,120,80,120L0,120Z" fill="currentColor"></path>
+			</svg>
+		</div>
+	</section>
 </Layout>

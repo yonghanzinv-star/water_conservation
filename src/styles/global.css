@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 /* ========================================
-   禾騰技術 Design System
-   深藍 + 大地綠 配色
+   禾騰?��?Design System
+   深�? + 大地�??�色
    ======================================== */
 
 @theme {
-  /* Brand Colors - 水利科技 x 農業永續 */
+  /* Brand Colors - 水利科�? x 農業永�? */
   --color-brand-blue: #1E3A5F;
   --color-brand-blue-light: #2A4A73;
   --color-brand-green: #2D5A27;
@@ -327,7 +327,7 @@ h6 {
    Page Header Banner
    ======================================== */
 
-.page-banner {
+.page-banner { position: relative; overflow: hidden;
   background: linear-gradient(135deg, var(--color-brand-blue) 0%, var(--color-brand-blue-light) 100%);
   padding: 4rem 0;
   color: white;
@@ -336,3 +336,4 @@ h6 {
 .page-banner h1 {
   color: white;
 }
+@keyframes float-circle { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-20px) scale(1.05); } }
