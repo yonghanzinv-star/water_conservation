@@ -129,8 +129,8 @@ const FarmerDetailModal: React.FC<FarmerDetailModalProps> = ({ farmer, onClose }
                                 </h3>
                                 <div className="grid grid-cols-1 gap-6">
                                     <DetailItem icon={User} title="負責人" content={farmer.personInCharge} />
-                                    <DetailItem icon={Sprout} title="耕作物種" content={Array.isArray(farmer.crop) ? farmer.crop.join(', ') : farmer.crop} />
-                                    <DetailItem icon={AreaChart} title="總耕地面積" content={`${farmer.area} 公頃`} />
+                                    <DetailItem icon={Sprout} title="農作物" content={Array.isArray(farmer.crop) ? farmer.crop.join(', ') : farmer.crop} />
+                                    <DetailItem icon={AreaChart} title="合理化施肥農地總面積" content={`${farmer.area} 公頃`} />
                                 </div>
                             </section>
 
@@ -138,7 +138,7 @@ const FarmerDetailModal: React.FC<FarmerDetailModalProps> = ({ farmer, onClose }
                             {farmer.history && (
                                 <section>
                                     <h3 className="text-2xl font-black text-slate-900 mb-8 flex items-center gap-3 border-b-2 border-slate-100 pb-4">
-                                        <History className="text-sky-500" /> 認養與擴展紀錄
+                                        <History className="text-sky-500" /> 合理化施肥執行紀錄
                                     </h3>
                                     <div className="space-y-6">
                                         {farmer.history.map((record, idx) => (

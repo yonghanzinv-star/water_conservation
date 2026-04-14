@@ -382,12 +382,12 @@ const WaterConservation: React.FC = () => {
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 lg:gap-8">
                                 {corpData.map(corp => (
                                     <div key={corp.id} onClick={() => setSelectedCorp(corp)} className="group cursor-pointer flex flex-col items-center">
-                                        <div className="aspect-square flex items-center justify-center p-5 bg-slate-50 rounded-2xl group-hover:bg-sky-50 transition-all duration-300 w-full mb-3 border border-slate-100 relative overflow-hidden">
+                                        <div className="aspect-square flex items-center justify-center p-4 md:p-3 bg-slate-50 rounded-2xl group-hover:bg-sky-50 transition-all duration-300 w-full mb-3 border border-slate-100 relative overflow-hidden">
                                             {corp.logoUrl ? (
-                                                <img src={corp.logoUrl} className="max-w-[85%] max-h-[85%] object-contain grayscale group-hover:grayscale-0 transition-all" alt={corp.name} />
+                                                <img src={corp.logoUrl} className="max-w-[90%] max-h-[90%] object-contain grayscale group-hover:grayscale-0 transition-all mix-blend-multiply" alt={corp.name} />
                                             ) : (
                                                 <div className="flex flex-col items-center justify-center text-center p-2">
-                                                    <span className="text-sm md:text-base font-black text-slate-400 group-hover:text-sky-600 transition-colors uppercase leading-tight">
+                                                    <span className="text-sm md:text-[11px] font-black text-slate-400 group-hover:text-sky-600 transition-colors uppercase leading-tight tracking-tighter">
                                                         {corp.name.substring(0, 4)}
                                                     </span>
                                                 </div>

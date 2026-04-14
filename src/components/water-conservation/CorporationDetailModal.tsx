@@ -49,7 +49,7 @@ const CorporationDetailModal: React.FC<CorporationDetailModalProps> = ({ corpora
                                 <img 
                                     src={corporation.logoUrl} 
                                     alt={corporation.name} 
-                                    className="w-full h-full object-cover" 
+                                    className="w-[85%] h-[85%] object-contain mix-blend-multiply" 
                                 />
                             ) : (
                                 <span className="text-xl md:text-2xl font-black text-slate-400 p-4 text-center leading-tight">
@@ -86,7 +86,7 @@ const CorporationDetailModal: React.FC<CorporationDetailModalProps> = ({ corpora
                     <div className="max-w-2xl mx-auto">
                         <section className="mb-12">
                             <h3 className="flex items-center text-2xl font-black text-slate-900 mb-8 pb-4 border-b-2 border-slate-200">
-                                <ShoppingBag className="mr-3 text-sky-500" /> 認養與認購成果
+                                <ShoppingBag className="mr-3 text-sky-500" /> 水源保育支持行為
                             </h3>
 
                             <div className="space-y-8">
