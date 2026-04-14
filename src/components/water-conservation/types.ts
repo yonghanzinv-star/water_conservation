@@ -12,6 +12,7 @@ export interface Corporation {
     contactEmail: string;
     contactPhone: string;
     status: 'pending' | 'approved' | 'rejected';
+    manualRecords?: { year: number; detail: string }[];
 }
 
 export interface Farmer {
@@ -35,6 +36,7 @@ export interface Farmer {
     lastTested: string;
     status: 'pending' | 'approved' | 'rejected' | 'unlisted';
     participatesInAdoption: boolean;
+    history?: { year: number; detail: string; areaChange?: number }[];
 }
 
 export interface Partnership {
@@ -63,9 +65,19 @@ export interface FooterContent {
     aboutUs: string;
     contactEmail: string;
     contactPhone: string;
+    copyright: string;
+}
+
+export interface ImpactContent {
+    totalArea: number;
+    phosphorus: number;
+    carbon: number;
+    reservoirArea: number;
+    population: string;
 }
 
 export interface SiteContent {
     homePage: HomePageContent;
     footer: FooterContent;
+    impact: ImpactContent;
 }

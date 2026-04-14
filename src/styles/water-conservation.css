@@ -1,68 +1,123 @@
-/* ========================================
-   Water Conservation Page Styles
-   Scoped with wc- prefix to avoid conflicts
-   ======================================== */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Inter:wght@400;500;700&display=swap');
 
-/* Full-screen snap scrolling */
+:root {
+  --wc-bg-deep: #020617;
+  --wc-bg-teal: #134e4a;
+  --wc-accent-sky: #38bdf8;
+  --wc-accent-emerald: #10b981;
+  --wc-glass-bg: rgba(255, 255, 255, 0.03);
+  --wc-glass-border: rgba(255, 255, 255, 0.1);
+  --wc-radius-xl: 3rem;
+  --wc-font-heading: 'Outfit', sans-serif;
+  --wc-font-body: 'Inter', sans-serif;
+}
+
+/* Base resets & layout */
 .wc-snap-container {
-    width: 100%;
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+  font-family: var(--wc-font-body);
 }
 
 .wc-snap-section {
-    min-height: 100vh;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Hide scrollbar but keep functionality */
-.wc-no-scrollbar::-webkit-scrollbar {
-    display: none;
+.wc-no-scrollbar::-webkit-scrollbar { display: none; }
+.wc-no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Typography Scale */
+h1, h2, h3 { font-family: var(--wc-font-heading); letter-spacing: -0.02em; }
+.wc-text-glow { text-shadow: 0 0 30px rgba(56, 189, 248, 0.3); }
+
+.wc-text-gradient {
+  background: linear-gradient(135deg, #fff 30%, var(--wc-accent-sky) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.wc-no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+/* Advanced Components */
+.wc-glass {
+  background: var(--wc-glass-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--wc-glass-border);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
 }
 
-/* Horizontal card snap scroll */
-.wc-h-snap {
-    scroll-snap-type: x mandatory;
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+/* Subtle inner glow for premium look */
+.wc-glass-premium {
+  position: relative;
+}
+.wc-glass-premium::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent 40%, transparent 60%, rgba(255,255,255,0.1));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
-.wc-h-snap-item {
-    scroll-snap-align: center;
-    flex-shrink: 0;
+/* Bento Grid System */
+.wc-bento-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1.5rem;
 }
 
-/* Text glow effect */
-.wc-text-glow {
-    text-shadow: 0 0 20px rgba(56, 189, 248, 0.4), 0 2px 10px rgba(0, 0, 0, 0.8);
+.wc-bento-card {
+  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.wc-bento-card:hover {
+  transform: translateY(-8px) scale(1.01);
+  border-color: rgba(255,255,255,0.3);
 }
 
-/* Hero gradient overlay */
+/* Animations */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.wc-animate-fade-up { animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
+
 .wc-hero-overlay {
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.3) 40%, rgba(0, 0, 0, 0.6) 80%, rgba(15, 23, 42, 0.9) 100%);
+  background: linear-gradient(to bottom, rgba(2, 6, 23, 0.4) 0%, rgba(2, 6, 23, 0.9) 100%);
 }
 
-/* Fade up animation */
-@keyframes wcFadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* Responsive Spacing & Adjustments */
+@media (max-width: 768px) {
+  .wc-snap-container { scroll-snap-type: none; height: auto; }
+  .wc-snap-section { height: auto; min-height: 100vh; padding: 4rem 1.5rem; }
+  .wc-bento-grid { grid-template-columns: 1fr; gap: 1rem; }
+  
+  /* Mobile specific overrides */
+  h1 { font-size: clamp(2.2rem, 8vw, 3.5rem) !important; }
+  h2 { font-size: 2.2rem !important; }
+  
+  .wc-bento-card { padding: 1.5rem !important; border-radius: 1.5rem !important; }
 }
 
-.wc-animate-fade-up {
-    animation: wcFadeUp 1s ease-out forwards;
+/* Compact Card Helpers */
+.wc-farmer-card-compact {
+  height: 400px;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@media (max-width: 768px) {
+  .wc-farmer-card-compact { height: 350px !important; }
 }
