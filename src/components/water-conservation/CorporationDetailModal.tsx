@@ -10,6 +10,15 @@ interface CorporationDetailModalProps {
 }
 
 const CorporationDetailModal: React.FC<CorporationDetailModalProps> = ({ corporation, partnerships, getFarmerName, onClose }) => {
+    // ESC key close support
+    React.useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [onClose]);
+
     if (!corporation) return null;
 
     // Support both automated partnerships and manual purchase records

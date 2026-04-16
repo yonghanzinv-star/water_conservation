@@ -200,6 +200,49 @@ const WaterConservation: React.FC = () => {
         loadData();
     }, []);
 
+    const [activeSection, setActiveSection] = useState(0);
+    
+    // Section definitions for navigation
+    const sections = [
+        { id: 'hero', label: '首頁' },
+        { id: 'story', label: '認識水庫' },
+        { id: 'impact', label: '成果' },
+        { id: 'ecosystem', label: '生態系' },
+        { id: 'join', label: '參與' }
+    ];
+
+    useEffect(() => {
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.5
+        };
+
+        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const index = sections.findIndex(s => s.id === entry.target.id);
+                    if (index !== -1) setActiveSection(index);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(observerCallback, observerOptions);
+        sections.forEach(s => {
+            const el = document.getElementById(s.id);
+            if (el) observer.observe(el);
+        });
+
+        return () => observer.disconnect();
+    }, [loading]); // Re-observe after data loads
+
+    const scrollToSection = (id: string) => {
+        const el = document.getElementById(id);
+        if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
     const getFarmerName = (id: string) => [...farmerData, ...farmers].find(f => f.id === id)?.name || '未知農場';
 
     if (loading && corpData.length === 0) {
@@ -213,8 +256,25 @@ const WaterConservation: React.FC = () => {
 
     return (
         <div className="wc-snap-container wc-no-scrollbar bg-slate-950 text-slate-200">
+            {/* Navigation Dots */}
+            <div className="fixed right-6 top-1/2 -translate-y-1/2 z-[100] hidden md:flex flex-col gap-4">
+                {sections.map((s, idx) => (
+                    <button
+                        key={s.id}
+                        onClick={() => scrollToSection(s.id)}
+                        className="group flex items-center justify-end"
+                        title={s.label}
+                    >
+                        <span className={`mr-4 text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeSection === idx ? 'opacity-100 text-sky-400' : 'opacity-0 group-hover:opacity-100 text-slate-500'}`}>
+                            {s.label}
+                        </span>
+                        <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${activeSection === idx ? 'bg-sky-400 scale-125 ring-4 ring-sky-400/20' : 'bg-slate-700 hover:bg-slate-500'}`}></div>
+                    </button>
+                ))}
+            </div>
+
             {/* 1. Cinematic Hero */}
-            <section className="wc-snap-section">
+            <section id="hero" className="wc-snap-section">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-[3s] scale-110" style={{ backgroundImage: 'url("/shimen_hero.png")' }}>
                     <div className="absolute inset-0 wc-hero-overlay"></div>
                 </div>
@@ -223,7 +283,7 @@ const WaterConservation: React.FC = () => {
                         <div className="mb-10 inline-flex p-3 rounded-2xl bg-sky-500/10 border border-sky-400/20 backdrop-blur-md">
                             <Droplets className="text-sky-400 h-8 w-8" />
                         </div>
-                        <h1 className="text-white text-6xl md:text-[8rem] font-black leading-[0.9] tracking-tighter mb-10 wc-text-glow" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle }}></h1>
+                        <h1 className="text-white text-4xl md:text-[8rem] font-black leading-[0.9] tracking-tighter mb-10 wc-text-glow break-words" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle }}></h1>
                         <p className="text-sky-100/60 text-xl md:text-3xl font-light leading-relaxed max-w-3xl mx-auto mb-20" dangerouslySetInnerHTML={{ __html: content.homePage.heroSubtitle }}></p>
                         <a href={`mailto:${content.footer.contactEmail}`} className="inline-flex items-center gap-6 px-12 py-8 bg-sky-500 text-white rounded-full font-bold text-2xl shadow-2xl hover:bg-sky-400 hover:scale-105 transition-all">
                             立即參與計畫 <ArrowRight size={28} />
@@ -236,7 +296,7 @@ const WaterConservation: React.FC = () => {
             </section>
 
             {/* 2. Story & Facts Section - Restored to Light Theme */}
-            <section className="wc-snap-section bg-slate-50 text-slate-900 p-10 md:p-20 justify-center">
+            <section id="story" className="wc-snap-section bg-slate-50 text-slate-900 px-6 py-16 md:p-20 justify-center">
                 <div className="max-w-xl mx-auto">
                     <div className="flex items-center gap-4 mb-6">
                         <div className="h-1.5 w-16 bg-sky-500 rounded-full"></div>
@@ -272,7 +332,7 @@ const WaterConservation: React.FC = () => {
 
 
             {/* 3. Impact Section (Bento Grid) */}
-            <section className="wc-snap-section bg-slate-950 px-6 pt-16 pb-24">
+            <section id="impact" className="wc-snap-section bg-slate-950 px-6 pt-16 pb-24">
                 <div className="max-w-7xl mx-auto w-full">
                     <div className="text-center mb-16">
                         <h2 className="text-5xl md:text-7xl font-black text-white mb-4">永續影響力成果</h2>
@@ -333,7 +393,7 @@ const WaterConservation: React.FC = () => {
             </section>
 
             {/* 3. Integrated Ecosystem Hub (Partnership Match) - Fixed Scroll Snap Skipping */}
-            <section className="snap-start min-h-screen bg-slate-50 py-24 md:py-32 overflow-y-auto text-slate-900 flex items-center">
+            <section id="ecosystem" className="snap-start min-h-screen bg-slate-50 py-24 md:py-32 overflow-y-auto text-slate-900 flex items-center">
                 <div className="max-w-7xl mx-auto px-6 w-full">
                     <div className="grid md:grid-cols-12 gap-12 lg:gap-20 items-start">
                         {/* Farmers Cluster */}
@@ -403,7 +463,7 @@ const WaterConservation: React.FC = () => {
             </section>
 
             {/* 6. Footer & CTA Section - Restored to Previous Detailed Style */}
-            <section className="wc-snap-section bg-slate-950 text-white p-12 justify-center">
+            <section id="join" className="wc-snap-section bg-slate-950 text-white p-12 justify-center">
                 <div className="max-w-xl mx-auto text-center">
                     <div className="inline-block p-5 bg-sky-500/10 rounded-[2rem] border border-sky-500/20 mb-10">
                         <Droplets className="h-12 w-12 text-sky-400" />

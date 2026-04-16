@@ -10,6 +10,15 @@ interface FarmerDetailModalProps {
 const FarmerDetailModal: React.FC<FarmerDetailModalProps> = ({ farmer, onClose }) => {
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+    // ESC key close support
+    React.useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [onClose]);
+
     if (!farmer) return null;
 
     const nextImage = () => {
