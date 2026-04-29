@@ -167,10 +167,19 @@ const WaterConservation: React.FC = () => {
     const [corpData, setCorpData] = useState<Corporation[]>([]);
     const [farmerData, setFarmerData] = useState<Farmer[]>([]);
     const [partnershipData, setPartnershipData] = useState<Partnership[]>([]);
-    const [content, setContent] = useState<SiteContent>(siteContent); // Fallback to initial static content
-    
+    const [content, setContent] = useState<SiteContent>(siteContent);
     const [selectedFarmer, setSelectedFarmer] = useState<Farmer | null>(null);
     const [selectedCorp, setSelectedCorp] = useState<Corporation | null>(null);
+    const [activeSection, setActiveSection] = useState(0);
+
+    const sections = [
+        { id: 'hero', label: '首頁' },
+        { id: 'story', label: '認識水庫' },
+        { id: 'impact', label: '成果' },
+        { id: 'farmers', label: '合作農場' },
+        { id: 'corps', label: '支持企業' },
+        { id: 'join', label: '參與' }
+    ];
 
     useEffect(() => {
         const loadData = async () => {
@@ -185,11 +194,10 @@ const WaterConservation: React.FC = () => {
 
                 if (rawCorps.length > 0) setCorpData(mapSheetToCorps(rawCorps));
                 if (rawFarmers.length > 0) setFarmerData(mapSheetToFarmers(rawFarmers));
-                if (rawPartnerships.length > 0) setPartnershipData(rawPartnerships as any); // Direct map for now
+                if (rawPartnerships.length > 0) setPartnershipData(rawPartnerships as any);
                 if (rawSettings.length > 0) setContent(mapSheetToSettings(rawSettings));
             } catch (err) {
                 console.error('Failed to load Google Sheets data, using static fallback.', err);
-                // Fallback will be used as initial state
                 setCorpData(corporations);
                 setFarmerData(farmers);
             } finally {
@@ -199,17 +207,6 @@ const WaterConservation: React.FC = () => {
 
         loadData();
     }, []);
-
-    const [activeSection, setActiveSection] = useState(0);
-    
-    // Section definitions for navigation
-    const sections = [
-        { id: 'hero', label: '首頁' },
-        { id: 'story', label: '認識水庫' },
-        { id: 'impact', label: '成果' },
-        { id: 'ecosystem', label: '生態系' },
-        { id: 'join', label: '參與' }
-    ];
 
     useEffect(() => {
         const observerOptions = {
@@ -234,7 +231,7 @@ const WaterConservation: React.FC = () => {
         });
 
         return () => observer.disconnect();
-    }, [loading]); // Re-observe after data loads
+    }, [loading]);
 
     const scrollToSection = (id: string) => {
         const el = document.getElementById(id);
@@ -274,7 +271,7 @@ const WaterConservation: React.FC = () => {
             </div>
 
             {/* 1. Cinematic Hero */}
-            <section id="hero" className="wc-snap-section">
+            <section id="hero" className="wc-snap-section bg-slate-950">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-[3s] scale-110" style={{ backgroundImage: 'url("/shimen_hero.png")' }}>
                     <div className="absolute inset-0 wc-hero-overlay"></div>
                 </div>
@@ -295,9 +292,9 @@ const WaterConservation: React.FC = () => {
                 </div>
             </section>
 
-            {/* 2. Story & Facts Section - Restored to Light Theme */}
+            {/* 2. Story & Facts Section */}
             <section id="story" className="wc-snap-section bg-slate-50 text-slate-900 px-6 py-16 md:p-20 justify-center">
-                <div className="max-w-xl mx-auto">
+                <div className="max-w-xl mx-auto relative z-10">
                     <div className="flex items-center gap-4 mb-6">
                         <div className="h-1.5 w-16 bg-sky-500 rounded-full"></div>
                         <span className="text-sky-600 font-black text-xs tracking-[0.3em] uppercase">認識水庫</span>
@@ -330,17 +327,15 @@ const WaterConservation: React.FC = () => {
                 </div>
             </section>
 
-
             {/* 3. Impact Section (Bento Grid) */}
             <section id="impact" className="wc-snap-section bg-slate-950 px-6 pt-16 pb-24">
-                <div className="max-w-7xl mx-auto w-full">
+                <div className="max-w-7xl mx-auto w-full relative z-10">
                     <div className="text-center mb-16">
                         <h2 className="text-5xl md:text-7xl font-black text-white mb-4">永續影響力成果</h2>
                         <p className="text-slate-500 text-xl font-medium">數據見證守護水源的真實足跡</p>
                     </div>
 
                     <div className="wc-bento-grid">
-                        {/* Area (Span 8) */}
                         <div className="col-span-12 md:col-span-8 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card">
                             <div className="flex justify-between items-start mb-12">
                                 <div className="p-4 bg-sky-500/20 text-sky-400 rounded-3xl"><BarChart3 size={32} /></div>
@@ -354,7 +349,6 @@ const WaterConservation: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Corps (Span 4) */}
                         <div className="col-span-12 md:col-span-4 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card bg-sky-500/10">
                             <div className="flex justify-between items-start mb-12">
                                 <div className="p-4 bg-sky-500 text-white rounded-3xl"><Building2 size={32} /></div>
@@ -365,7 +359,6 @@ const WaterConservation: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Phosphorus (Span 5) */}
                         <div className="col-span-12 md:col-span-5 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card">
                             <div className="flex justify-between items-start mb-8">
                                 <div className="p-4 bg-emerald-500/20 text-emerald-400 rounded-3xl"><FlaskConical size={32} /></div>
@@ -377,7 +370,6 @@ const WaterConservation: React.FC = () => {
                             </div>
                         </div>
 
-                        {/* Carbon (Span 7) */}
                         <div className="col-span-12 md:col-span-7 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card">
                             <div className="flex justify-between items-start mb-8">
                                 <div className="p-4 bg-indigo-500/20 text-indigo-400 rounded-3xl"><Trees size={32} /></div>
@@ -392,79 +384,84 @@ const WaterConservation: React.FC = () => {
                 </div>
             </section>
 
-            {/* 3. Integrated Ecosystem Hub (Partnership Match) - Fixed Scroll Snap Skipping */}
-            <section id="ecosystem" className="snap-start min-h-screen bg-slate-50 py-24 md:py-32 overflow-y-auto text-slate-900 flex items-center">
-                <div className="max-w-7xl mx-auto px-6 w-full">
-                    <div className="grid md:grid-cols-12 gap-12 lg:gap-20 items-start">
-                        {/* Farmers Cluster */}
-                        <div className="md:col-span-7">
-                            <div className="mb-12">
-                                <span className="text-sky-600 font-bold tracking-[0.4em] uppercase text-[10px] mb-4 block">Practice Side</span>
-                                <h2 className="text-5xl lg:text-7xl font-black text-slate-950 mb-6">合作農場</h2>
-                                <p className="text-xl text-slate-500 font-medium">從耕作到保育，他們在第一線守護北台灣的水源。</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-4 md:gap-6">
-                                {farmerData.map((farmer) => (
-                                    <div
-                                        key={farmer.id}
-                                        onClick={() => setSelectedFarmer(farmer)}
-                                        className="cursor-pointer group relative overflow-hidden rounded-[2.5rem] aspect-[4/3] shadow-lg bg-slate-200"
-                                    >
-                                        {farmer.imageUrls?.[0] ? (
-                                            <img 
-                                                src={farmer.imageUrls[0]} 
-                                                className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" 
-                                                onError={(e) => {
-                                                    (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop';
-                                                }}
-                                            />
-                                        ) : (
-                                            <div className="w-full h-full bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center p-6 text-center">
-                                                <Trees className="text-white/20 absolute inset-0 w-full h-full p-12" />
-                                                <span className="relative z-10 text-white font-black text-xl">{farmer.name}</span>
-                                            </div>
-                                        )}
-                                        <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent p-8 flex flex-col justify-end">
-                                            <h3 className="text-white font-black text-xl lg:text-2xl">{farmer.name}</h3>
-                                            <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest flex items-center gap-2"><MapPin size={12} /> {farmer.district}</p>
-                                        </div>
-                                    </div>
-                                ))}
-                            </div>
+            {/* 4. Partner Farms Section */}
+            <section id="farmers" className="wc-snap-section bg-slate-50 flex items-center justify-center px-6 pt-32 pb-24">
+                <div className="max-w-7xl mx-auto w-full relative z-10">
+                    <div className="mb-20 text-center">
+                        <div className="flex items-center justify-center gap-4 mb-4">
+                            <div className="h-1.5 w-12 bg-sky-500 rounded-full"></div>
+                            <span className="text-sky-600 font-black text-xs tracking-[0.3em] uppercase">Practice Side</span>
+                            <div className="h-1.5 w-12 bg-sky-500 rounded-full"></div>
                         </div>
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-950 mb-6">合作農場</h2>
+                        <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">從耕作到保育，他們在第一線守護北台灣的水源。</p>
+                    </div>
+                    
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
+                        {farmerData.map((farmer) => (
+                            <div
+                                key={farmer.id}
+                                onClick={() => setSelectedFarmer(farmer)}
+                                className="cursor-pointer group relative overflow-hidden rounded-2xl aspect-square shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-xl bg-slate-200"
+                            >
+                                <img 
+                                    src={farmer.imageUrls?.[0] || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop'} 
+                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                                    alt={farmer.name}
+                                    onError={(e) => {
+                                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop';
+                                    }}
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent p-4 flex flex-col justify-end">
+                                    <h3 className="text-white font-black text-sm md:text-lg leading-tight">{farmer.name}</h3>
+                                    <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mt-1 flex items-center gap-1"><MapPin size={10} /> {farmer.district}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </section>
 
-                        {/* Corporations Cluster */}
-                        <div className="md:col-span-5 bg-white p-8 md:p-14 rounded-[3.5rem] shadow-xl border border-slate-100 self-center">
-                            <div className="mb-10 md:mb-12">
-                                <span className="text-slate-400 font-bold tracking-[0.3em] uppercase text-[10px] mb-4 block">Success Story</span>
-                                <h2 className="text-4xl md:text-5xl font-black text-slate-950">支持企業</h2>
-                            </div>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 lg:gap-8">
-                                {corpData.map(corp => (
-                                    <div key={corp.id} onClick={() => setSelectedCorp(corp)} className="group cursor-pointer flex flex-col items-center">
-                                        <div className="aspect-square flex items-center justify-center p-4 md:p-3 bg-slate-50 rounded-2xl group-hover:bg-sky-50 transition-all duration-300 w-full mb-3 border border-slate-100 relative overflow-hidden">
-                                            {corp.logoUrl ? (
-                                                <img src={corp.logoUrl} className="max-w-[90%] max-h-[90%] object-contain grayscale group-hover:grayscale-0 transition-all mix-blend-multiply" alt={corp.name} />
-                                            ) : (
-                                                <div className="flex flex-col items-center justify-center text-center p-2">
-                                                    <span className="text-sm md:text-[11px] font-black text-slate-400 group-hover:text-sky-600 transition-colors uppercase leading-tight tracking-tighter">
-                                                        {corp.name.substring(0, 4)}
-                                                    </span>
-                                                </div>
-                                            )}
+            {/* 5. Supporting Corporations Section */}
+            <section id="corps" className="wc-snap-section bg-white flex items-center justify-center px-6 pt-32 pb-24 overflow-y-auto">
+                <div className="max-w-7xl mx-auto w-full text-center relative z-10">
+                    <div className="mb-16">
+                        <span className="text-slate-400 font-black text-xs tracking-[0.3em] uppercase mb-4 block">Success Story</span>
+                        <h2 className="text-4xl md:text-5xl font-black text-slate-950 mb-6">支持企業</h2>
+                        <div className="h-1.5 w-20 bg-sky-500 mx-auto rounded-full"></div>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
+                        {corpData.map(corp => (
+                            <div 
+                                key={corp.id} 
+                                onClick={() => setSelectedCorp(corp)} 
+                                className="group cursor-pointer flex flex-col items-center"
+                            >
+                                <div className="wc-logo-item aspect-square w-full flex items-center justify-center p-6 bg-slate-50 rounded-2xl group-hover:bg-sky-50 transition-all border border-slate-100">
+                                    {corp.logoUrl ? (
+                                        <img 
+                                            src={corp.logoUrl} 
+                                            className="max-w-[90%] max-h-[90%] object-contain mix-blend-multiply" 
+                                            alt={corp.name} 
+                                        />
+                                    ) : (
+                                        <div className="text-center p-2">
+                                            <span className="text-xs font-black text-slate-400 group-hover:text-sky-600 transition-colors uppercase leading-tight">
+                                                {corp.name}
+                                            </span>
                                         </div>
-                                        <span className="text-[10px] font-bold text-slate-400 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-all text-center line-clamp-1">{corp.name}</span>
-                                    </div>
-                                ))}
+                                    )}
+                                </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
 
             {/* 6. Footer & CTA Section - Restored to Previous Detailed Style */}
             <section id="join" className="wc-snap-section bg-slate-950 text-white p-12 justify-center">
-                <div className="max-w-xl mx-auto text-center">
+                <div className="max-w-xl mx-auto text-center relative z-10">
                     <div className="inline-block p-5 bg-sky-500/10 rounded-[2rem] border border-sky-500/20 mb-10">
                         <Droplets className="h-12 w-12 text-sky-400" />
                     </div>
