@@ -1,7 +1,6 @@
 ---
-import Header from "../components/Header.astro";
-import Footer from "../components/Footer.astro";
 import "../styles/global.css";
+import "../styles/water-conservation.css";
 
 interface Props {
   title?: string;
@@ -9,8 +8,8 @@ interface Props {
 }
 
 const {
-  title = "禾騰技術 - 以跨域工程與智慧科技，打造韌性永續未來",
-  description = "禾騰技術專注於農業水利、集水區治理及低碳永續工程，運用工程結合新興科技，協助政府部門促進農業永續與公共韌性提升。",
+  title = "石門水庫水源地永續計畫",
+  description = "跨界合作守護北台灣生命之源，推動集水區友善農業與水質保育。",
 } = Astro.props;
 ---
 
@@ -26,29 +25,20 @@ const {
     <meta name="description" content={description} />
     <meta
       name="keywords"
-      content="禾騰技術, 農業水利, 集水區治理, 永續工程, 智慧防災, 擴大灌溉, ESG, 水土保持"
+      content="石門水庫, 水源保育, 永續工程, 友善農業, ESG"
     />
-    <meta name="author" content="禾騰技術股份有限公司" />
-
-    <!-- Open Graph -->
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="zh_TW" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap"
       rel="stylesheet"
     />
   </head>
-  <body class="antialiased flex flex-col min-h-screen">
-    <Header />
-    <main class="flex-grow">
+  <body class="antialiased min-h-screen">
+    <main>
       <slot />
     </main>
-    <Footer />
   </body>
 </html>

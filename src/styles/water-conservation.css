@@ -44,6 +44,14 @@
   padding-bottom: 4rem;
 }
 
+/* Specific override for Hero section to ensure perfect centering */
+#hero.wc-snap-section {
+  padding-top: 0;
+  padding-bottom: 0;
+  height: 100dvh;
+  justify-content: center;
+}
+
 /* Height Adaptability - for short viewports */
 @media (max-height: 850px) {
   .wc-snap-section {
@@ -122,6 +130,7 @@ h1, h2, h3 { font-family: var(--wc-font-heading); letter-spacing: -0.02em; }
   from { opacity: 0; transform: translateY(40px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
 
 .wc-animate-fade-up { animation: fadeInUp 1s cubic-bezier(0.23, 1, 0.32, 1) forwards; }
 

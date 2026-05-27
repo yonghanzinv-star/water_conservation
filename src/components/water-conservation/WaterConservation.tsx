@@ -122,7 +122,7 @@ const farmers: Farmer[] = [
 
 const siteContent: SiteContent = {
     homePage: {
-        heroTitle: '石門水庫：<br/><span class="wc-text-gradient">水源地永續計畫</span>',
+        heroTitle: '石門水庫<br/><span class="wc-text-gradient">水源地永續計畫</span>',
         heroSubtitle: '跨界合作守護北台灣生命之源<br/>推動集水區友善農業與水質保育',
         heroDescription: '石門水庫提供超過 300 萬人的民生用水，是台灣北部經濟與社會的核心。',
         partnersTitle: '守護家園的夥伴',
@@ -271,19 +271,22 @@ const WaterConservation: React.FC = () => {
             </div>
 
             {/* 1. Cinematic Hero */}
-            <section id="hero" className="wc-snap-section bg-slate-950">
+            <section id="hero" className="wc-snap-section bg-slate-950 flex flex-col items-center justify-center">
                 <div className="absolute inset-0 bg-cover bg-center transition-transform duration-[3s] scale-110" style={{ backgroundImage: 'url("/shimen_hero.png")' }}>
                     <div className="absolute inset-0 wc-hero-overlay"></div>
                 </div>
-                <div className="relative z-10 flex flex-col items-center justify-center h-full px-6 text-center">
+                <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full px-6 text-center">
                     <div className="max-w-5xl wc-animate-fade-up">
                         <div className="mb-10 inline-flex p-3 rounded-2xl bg-sky-500/10 border border-sky-400/20 backdrop-blur-md">
                             <Droplets className="text-sky-400 h-8 w-8" />
                         </div>
-                        <h1 className="text-white text-4xl md:text-[8rem] font-black leading-[0.9] tracking-tighter mb-10 wc-text-glow break-words" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle }}></h1>
-                        <p className="text-sky-100/60 text-xl md:text-3xl font-light leading-relaxed max-w-3xl mx-auto mb-20" dangerouslySetInnerHTML={{ __html: content.homePage.heroSubtitle }}></p>
-                        <a href={`mailto:${content.footer.contactEmail}`} className="inline-flex items-center gap-6 px-12 py-8 bg-sky-500 text-white rounded-full font-bold text-2xl shadow-2xl hover:bg-sky-400 hover:scale-105 transition-all">
-                            立即參與計畫 <ArrowRight size={28} />
+                        <h1 className="text-white text-3xl md:text-[8rem] font-black leading-tight md:leading-[0.9] tracking-tighter mb-6 md:mb-10 wc-text-glow break-words" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle.replace(/[:：]/g, '') }}></h1>
+                        <div className="text-sky-100/60 text-lg md:text-3xl font-light leading-relaxed max-w-3xl mx-auto mb-10 md:mb-20">
+                            <p className="block">跨界合作守護北台灣生命之源</p>
+                            <p className="block">推動集水區友善農業與水質保育</p>
+                        </div>
+                        <a href={`mailto:${content.footer.contactEmail}`} className="inline-flex items-center gap-4 md:gap-6 px-8 py-4 md:px-12 md:py-8 bg-sky-500 text-white rounded-full font-bold text-lg md:text-2xl shadow-2xl hover:bg-sky-400 hover:scale-105 transition-all">
+                            立即參與計畫 <ArrowRight size={24} />
                         </a>
                     </div>
                 </div>
