@@ -123,7 +123,9 @@ export const mapSheetToSettings = (data: any[]): SiteContent => {
             phosphorus: 25.3,
             carbon: 152,
             reservoirArea: 763,
-            population: '300+'
+            population: '300+',
+            communityAssociations: 2,
+            communityColleges: 1
         } 
     };
 

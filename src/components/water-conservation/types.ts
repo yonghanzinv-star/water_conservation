@@ -74,6 +74,8 @@ export interface ImpactContent {
     carbon: number;
     reservoirArea: number;
     population: string;
+    communityAssociations: number;
+    communityColleges: number;
 }
 
 export interface SiteContent {

@@ -383,6 +383,28 @@ const WaterConservation: React.FC = () => {
                                 <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">年減碳潛力貢獻</p>
                             </div>
                         </div>
+
+                        <div className="col-span-12 md:col-span-6 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card bg-amber-500/10">
+                            <div className="flex justify-between items-start mb-8">
+                                <div className="p-4 bg-amber-500/20 text-amber-400 rounded-3xl"><Target size={32} /></div>
+                                <span className="text-amber-400/50 text-[10px] font-black tracking-widest uppercase">Community Assoc</span>
+                            </div>
+                            <div>
+                                <p className="text-5xl md:text-7xl font-black text-amber-400 mb-2"><CountUpNumber value={content.impact.communityAssociations} /></p>
+                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">合作社區發展協會 (個)</p>
+                            </div>
+                        </div>
+
+                        <div className="col-span-12 md:col-span-6 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card bg-purple-500/10">
+                            <div className="flex justify-between items-start mb-8">
+                                <div className="p-4 bg-purple-500/20 text-purple-400 rounded-3xl"><Globe size={32} /></div>
+                                <span className="text-purple-400/50 text-[10px] font-black tracking-widest uppercase">Community College</span>
+                            </div>
+                            <div>
+                                <p className="text-5xl md:text-7xl font-black text-purple-400 mb-2"><CountUpNumber value={content.impact.communityColleges} /></p>
+                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">合作社區大學 (所)</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
