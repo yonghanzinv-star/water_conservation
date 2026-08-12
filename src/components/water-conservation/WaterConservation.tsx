@@ -348,7 +348,7 @@ const WaterConservation: React.FC = () => {
                                 <p className="text-5xl md:text-7xl font-black text-white leading-none mb-4">
                                     <CountUpNumber value={content.impact.totalArea} decimals={1} />
                                 </p>
-                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">已認養總面積 (公頃)</p>
+                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">已推動總面積 (公頃)</p>
                             </div>
                         </div>
 
