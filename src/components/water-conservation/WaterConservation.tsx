@@ -1,150 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import type { Corporation, Farmer, Partnership, SiteContent } from './types';
-import { Building2, Leaf, Droplets, MapPin, Waves, Mountain, ShieldCheck, Mail, ChevronDown, BarChart3, FlaskConical, Globe, Trees, ExternalLink, ArrowRight, ShoppingBag, Sprout, Target } from 'lucide-react';
+import { Building2, Droplets, MapPin, Mountain, Mail, BarChart3, FlaskConical, Globe, Trees, ExternalLink, ArrowRight, Target, ChevronRight, Menu, X } from 'lucide-react';
 import FarmerDetailModal from './FarmerDetailModal';
 import CorporationDetailModal from './CorporationDetailModal';
 import { fetchCSV, mapSheetToCorps, mapSheetToFarmers, mapSheetToSettings } from '../../utils/googleSheets';
 
 // ============================
-// Google Sheets CSV URLs (User needs to replace these)
+// Google Sheets CSV URLs
 // ============================
 const SHEET_URLS = {
     corporations: 'https://docs.google.com/spreadsheets/d/1wdB4XIfiqclj0spILEeIudVLSD7vMn9HiUfKW4b-Lpg/export?format=csv&gid=1720908014',
     farmers: 'https://docs.google.com/spreadsheets/d/1wdB4XIfiqclj0spILEeIudVLSD7vMn9HiUfKW4b-Lpg/export?format=csv&gid=2022674934',
     partnerships: 'https://docs.google.com/spreadsheets/d/1wdB4XIfiqclj0spILEeIudVLSD7vMn9HiUfKW4b-Lpg/export?format=csv&gid=2059297580',
     settings: 'https://docs.google.com/spreadsheets/d/1wdB4XIfiqclj0spILEeIudVLSD7vMn9HiUfKW4b-Lpg/export?format=csv&gid=234898130'
-};
-const corporations: Corporation[] = [
-    { 
-        id: 'corp-coke', userId: 'user-coke', name: '太古可口可樂', taxId: '04375848', website: 'https://www.coca-cola.com.tw', 
-        city: '桃園市', district: '桃園區', industry: '食品飲料業', logoUrl: '/logos/coke.jpg', 
-        esgFocus: ['水源保育', '永續包裝'], contactEmail: 'service@coke.tw', contactPhone: '', status: 'approved',
-        manualRecords: [{ year: 112, detail: '認購 125 盒水蜜桃' }]
-    },
-    { 
-        id: 'corp-kenci', userId: 'user-kenci', name: '根基營造 (冠德根基)', taxId: '22099131', website: 'https://www.kedge.com.tw', 
-        city: '新北市', district: '中和區', industry: '營造業', logoUrl: '/logos/根基營造.svg', 
-        esgFocus: ['環境友善', '社會公益'], contactEmail: 'csr@kenci.com.tw', contactPhone: '', status: 'approved',
-        manualRecords: [
-            { year: 112, detail: '認購 2882 斤綠竹筍' },
-            { year: 113, detail: '認購 3256 斤綠竹筍' }
-        ]
-    },
-    { 
-        id: 'corp-grape', userId: 'user-grape', name: '葡萄王生技', taxId: '43050202', website: 'https://www.grapeking.com.tw', 
-        city: '桃園市', district: '平鎮區', industry: '生技醫療業', logoUrl: '/logos/grapeking.png', 
-        esgFocus: ['健康永續', '資源循環'], contactEmail: 'service@grapeking.com.tw', contactPhone: '', status: 'approved',
-        manualRecords: [
-            { year: 112, detail: '認購 274 斤綠竹筍、10 盒水蜜桃' },
-            { year: 113, detail: '認購 354 斤綠竹筍' },
-            { year: 114, detail: '認購 347 斤綠竹筍' }
-        ]
-    },
-    { 
-        id: 'corp-lilai', userId: 'user-lilai', name: '力萊工程', taxId: '28682181', website: 'https://www.lilai.com.tw', 
-        city: '桃園市', district: '蘆竹區', industry: '工程業', logoUrl: '', 
-        esgFocus: ['綠色工程', '水源地守護'], contactEmail: 'service@lilai.tw', contactPhone: '', status: 'approved',
-        manualRecords: [{ year: 112, detail: '認購 7 盒水蜜桃' }]
-    },
-    { 
-        id: 'corp-xiangdi', userId: 'user-xiangdi', name: '翔第', taxId: '54067822', website: '#', 
-        city: '桃園市', district: '桃園區', industry: '貿易業', logoUrl: '', 
-        esgFocus: ['在地採購', '社會責任'], contactEmail: 'contact@xiangdi.tw', contactPhone: '', status: 'approved',
-        manualRecords: [{ year: 113, detail: '認購 122 斤綠竹筍' }]
-    },
-    { 
-        id: 'corp-kym', userId: 'user-kym', name: '金元福包裝', taxId: '23528221', website: 'https://www.kyf.com.tw', 
-        city: '新北市', district: '鶯歌區', industry: '包裝工業', logoUrl: '/logos/kyf.png', 
-        esgFocus: ['循環經濟', '環境保育'], contactEmail: 'service@kym.com.tw', contactPhone: '', status: 'approved',
-        manualRecords: [
-            { year: 113, detail: '認購 200 斤綠竹筍' },
-            { year: 114, detail: '認購 200 斤綠竹筍' }
-        ]
-    },
-    { 
-        id: 'corp-kanchun', userId: 'user-kanchun', name: '康淳科技', taxId: '89364521', website: 'https://www.concordtech.com.tw', 
-        city: '臺中市', district: '西屯區', industry: '環保科技業', logoUrl: '/logos/康淳科技.jpg', 
-        esgFocus: ['水處理技術', '永續發展'], contactEmail: 'service@kanchun.tw', contactPhone: '', status: 'approved',
-        manualRecords: [{ year: 114, detail: '認購 137 斤綠竹筍' }]
-    },
-    { 
-        id: 'corp-tron', userId: 'user-tron', name: '創控科技', taxId: '24567123', website: 'https://www.tron.com.tw', 
-        city: '新竹市', district: '香山區', industry: '電子科技業', logoUrl: '/logos/創控科技.png', 
-        esgFocus: ['智慧監測', '環境守護'], contactEmail: 'info@tron.com.tw', contactPhone: '', status: 'approved',
-        manualRecords: [{ year: 114, detail: '認購 272 斤綠竹筍' }]
-    }
-];
-
-const farmers: Farmer[] = [
-    {
-        id: 'farm-rihua', userId: 'user-farm-rihua', name: '日華農場', personInCharge: '葉日華',
-        email: 'rihua@example.com', telephone: '', location: '石門水庫集水區',
-        city: '桃園市', district: '大溪區', crop: ['綠竹筍'],
-        googleMapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3623!2d121.29!3d24.75!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34681b0b39564177%3A0x1b02862d22a57868!2z5aSn5rqi6ICB6Iy25bug!5e0!3m2!1szh-TW!2stw!4v1678886400000',
-        imageUrls: ['https://picsum.photos/seed/rihua/800/600', 'https://picsum.photos/seed/rihua2/800/600'],
-        farmGoal: '有機認證，友善耕作', carbonPotential: 5, needs: '尋求銷售通路',
-        area: 6.8, phosphorusReductionRate: 46, lastTested: '2024-05', status: 'approved', participatesInAdoption: true,
-        history: [
-            { year: 112, detail: '加入計畫', areaChange: 1 },
-            { year: 113, detail: '擴展耕地', areaChange: 4 },
-            { year: 114, detail: '規模化經營', areaChange: 6.8 }
-        ]
-    },
-    {
-        id: 'farm-gujia', userId: 'user-farm-gujia', name: '古家農場', personInCharge: '古先生',
-        email: 'gujia@example.com', telephone: '', location: '優質水質區',
-        city: '桃園市', district: '復興區', crop: ['水蜜桃'],
-        googleMapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1!2d121.2!3d24.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1s0x3468!2z55-z6ZaA5rC05bKp!5e0!3m2!1szh-TW!2stw!4v1',
-        imageUrls: ['https://picsum.photos/seed/gujia/800/600'],
-        farmGoal: '友善農法', area: 1.6, phosphorusReductionRate: 12, lastTested: '2024-10', status: 'approved', participatesInAdoption: true,
-        history: [{ year: 114, detail: '加入計畫', areaChange: 1.6 }]
-    },
-    {
-        id: 'farm-happy', userId: 'user-farm-happy', name: '幸福農場', personInCharge: '小農',
-        email: 'happy@example.com', telephone: '', location: '大溪涵養區',
-        city: '桃園市', district: '大溪區', crop: ['綠竹筍'],
-        googleMapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1!2d121.2!3d24.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1s0x3468!2z55-z6ZaA5rC05bKp!5e0!3m2!1szh-TW!2stw!4v1',
-        imageUrls: ['https://picsum.photos/seed/happy/800/600'],
-        farmGoal: '水源守護', area: 1, phosphorusReductionRate: 10, lastTested: '2024-11', status: 'approved', participatesInAdoption: true,
-        history: [{ year: 114, detail: '加入計畫', areaChange: 1 }]
-    },
-    {
-        id: 'farm-coop', userId: 'user-farm-coop', name: '合作農社', personInCharge: '代表',
-        email: 'coop@example.com', telephone: '', location: '復興涵養區',
-        city: '桃園市', district: '復興區', crop: ['友善蔬果'],
-        googleMapEmbedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1!2d121.2!3d24.7!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1s0x3468!2z55-z6ZaA5rC05bKp!5e0!3m2!1szh-TW!2stw!4v1',
-        imageUrls: ['https://picsum.photos/seed/coop/800/600'],
-        farmGoal: '集體保育', area: 0.5, phosphorusReductionRate: 8, lastTested: '2024-12', status: 'approved', participatesInAdoption: true,
-        history: [{ year: 114, detail: '加入計畫', areaChange: 0.5 }]
-    }
-
-];
-
-const siteContent: SiteContent = {
-    homePage: {
-        heroTitle: '石門水庫<br/><span class="wc-text-gradient">水源地永續計畫</span>',
-        heroSubtitle: '跨界合作守護北台灣生命之源<br/>推動集水區友善農業與水質保育',
-        heroDescription: '石門水庫提供超過 300 萬人的民生用水，是台灣北部經濟與社會的核心。',
-        partnersTitle: '守護家園的夥伴',
-        partnersSubtitle: '企業與農民已共同投入環境優化工程',
-        reservoirTitle: '認識石門水庫',
-        reservoirSubtitle: '守護半世紀的生命之源',
-        reservoirDescription: '石門水庫位於桃園市大漢溪中游，集水區廣達 763 平方公里。自 1964 年完工以來，承擔著灌溉、發電、防洪及供應數百萬人口用水的多重任務。隨著極端氣候挑戰，水質保育與泥沙防治成為關鍵。我們推動友善耕作，減少化肥與農藥流失，延續水庫生命力。',
-        joinUsTitle: '攜手守護水源',
-        joinUsSubtitle: '如果您是關注 ESG 的企業或農民，歡迎參與這場永續行動。'
-    },
-    footer: {
-        aboutUs: '本計畫專注於透過友善耕作保護集水區環境，連結企業與農民，創造環境、社會與產業三贏。',
-        contactEmail: 'yhansum@hetengtech.com',
-        contactPhone: '',
-    },
-    impact: {
-        totalArea: 9.9,
-        phosphorus: 25.3,
-        carbon: 152,
-        reservoirArea: 763,
-        population: '300+'
-    }
 };
 
 const CountUpNumber: React.FC<{ value: number; decimals?: number; duration?: number }> = ({ value, decimals = 0, duration = 2000 }) => {
@@ -167,18 +35,43 @@ const WaterConservation: React.FC = () => {
     const [corpData, setCorpData] = useState<Corporation[]>([]);
     const [farmerData, setFarmerData] = useState<Farmer[]>([]);
     const [partnershipData, setPartnershipData] = useState<Partnership[]>([]);
-    const [content, setContent] = useState<SiteContent>(siteContent);
+    
+    // Default fallback content
+    const [content, setContent] = useState<SiteContent>({
+        homePage: {
+            heroTitle: '石門水庫水源地永續計畫',
+            heroSubtitle: '跨界合作守護北台灣生命之源',
+            heroDescription: '石門水庫提供超過 300 萬人的民生用水，是台灣北部經濟與社會的核心。',
+            partnersTitle: '守護家園的夥伴',
+            partnersSubtitle: '企業與農民已共同投入環境優化工程',
+            reservoirTitle: '認識石門水庫',
+            reservoirSubtitle: '守護半世紀的生命之源',
+            reservoirDescription: '石門水庫位於桃園市大漢溪中游，集水區廣達 763 平方公里。自 1964 年完工以來，承擔著灌溉、發電、防洪及供應數百萬人口用水的多重任務。隨著極端氣候挑戰，水質保育與泥沙防治成為關鍵。我們推動友善耕作，減少化肥與農藥流失，延續水庫生命力。',
+            joinUsTitle: '攜手守護水源',
+            joinUsSubtitle: '如果您是關注 ESG 的企業或農民，歡迎參與這場永續行動。'
+        },
+        footer: {
+            aboutUs: '本計畫專注於透過友善耕作保護集水區環境，連結企業與農民，創造環境、社會與產業三贏。',
+            contactEmail: 'yhansum@hetengtech.com',
+            contactPhone: '',
+            copyright: '© 2024 Shimen Project'
+        },
+        impact: {
+            totalArea: 9.9, phosphorus: 25.3, carbon: 152, reservoirArea: 763, population: '300+', communityAssociations: 2, communityColleges: 1
+        }
+    });
+
     const [selectedFarmer, setSelectedFarmer] = useState<Farmer | null>(null);
     const [selectedCorp, setSelectedCorp] = useState<Corporation | null>(null);
-    const [activeSection, setActiveSection] = useState(0);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [activeSection, setActiveSection] = useState('hero');
 
-    const sections = [
+    const navLinks = [
         { id: 'hero', label: '首頁' },
-        { id: 'story', label: '認識水庫' },
-        { id: 'impact', label: '成果' },
+        { id: 'story', label: '認識計畫' },
+        { id: 'impact', label: '影響力數據' },
         { id: 'farmers', label: '合作農場' },
-        { id: 'corps', label: '支持企業' },
-        { id: 'join', label: '參與' }
+        { id: 'corps', label: '支持企業' }
     ];
 
     useEffect(() => {
@@ -186,260 +79,264 @@ const WaterConservation: React.FC = () => {
             setLoading(true);
             try {
                 const [rawCorps, rawFarmers, rawPartnerships, rawSettings] = await Promise.all([
-                    fetchCSV(SHEET_URLS.corporations),
-                    fetchCSV(SHEET_URLS.farmers),
-                    fetchCSV(SHEET_URLS.partnerships),
-                    fetchCSV(SHEET_URLS.settings)
+                    fetchCSV(SHEET_URLS.corporations), fetchCSV(SHEET_URLS.farmers), fetchCSV(SHEET_URLS.partnerships), fetchCSV(SHEET_URLS.settings)
                 ]);
-
                 if (rawCorps.length > 0) setCorpData(mapSheetToCorps(rawCorps));
                 if (rawFarmers.length > 0) setFarmerData(mapSheetToFarmers(rawFarmers));
                 if (rawPartnerships.length > 0) setPartnershipData(rawPartnerships as any);
                 if (rawSettings.length > 0) setContent(mapSheetToSettings(rawSettings));
             } catch (err) {
-                console.error('Failed to load Google Sheets data, using static fallback.', err);
-                setCorpData(corporations);
-                setFarmerData(farmers);
+                console.error('Failed to load Google Sheets data.', err);
             } finally {
                 setLoading(false);
             }
         };
-
         loadData();
     }, []);
 
     useEffect(() => {
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5
-        };
-
-        const observerCallback = (entries: IntersectionObserverEntry[]) => {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const index = sections.findIndex(s => s.id === entry.target.id);
-                    if (index !== -1) setActiveSection(index);
+                    setActiveSection(entry.target.id);
                 }
             });
-        };
+        }, { threshold: 0.3 });
 
-        const observer = new IntersectionObserver(observerCallback, observerOptions);
-        sections.forEach(s => {
-            const el = document.getElementById(s.id);
+        navLinks.forEach(link => {
+            const el = document.getElementById(link.id);
             if (el) observer.observe(el);
         });
 
         return () => observer.disconnect();
     }, [loading]);
 
-    const scrollToSection = (id: string) => {
+    const scrollTo = (id: string) => {
         const el = document.getElementById(id);
         if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
+            const y = el.getBoundingClientRect().top + window.scrollY - 80;
+            window.scrollTo({ top: y, behavior: 'smooth' });
         }
+        setMobileMenuOpen(false);
     };
 
-    const getFarmerName = (id: string) => [...farmerData, ...farmers].find(f => f.id === id)?.name || '未知農場';
-
-    if (loading && corpData.length === 0) {
+    if (loading) {
         return (
-            <div className="h-screen bg-slate-950 flex flex-col items-center justify-center">
-                <div className="w-16 h-16 border-4 border-sky-500 border-t-transparent rounded-full animate-spin mb-6"></div>
-                <p className="text-sky-500 font-black animate-pulse">正在同步水源地即時數據...</p>
+            <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
+                <div className="w-12 h-12 border-4 border-sky-600 border-t-transparent rounded-full animate-spin mb-4"></div>
+                <p className="text-slate-500 font-medium tracking-wider">載入資料中...</p>
             </div>
         );
     }
 
     return (
-        <div className="wc-snap-container wc-no-scrollbar bg-slate-950 text-slate-200">
-            {/* Navigation Dots */}
-            <div className="fixed right-6 top-1/2 -translate-y-1/2 z-[100] hidden md:flex flex-col gap-4">
-                {sections.map((s, idx) => (
-                    <button
-                        key={s.id}
-                        onClick={() => scrollToSection(s.id)}
-                        className="group flex items-center justify-end"
-                        title={s.label}
-                    >
-                        <span className={`mr-4 text-[10px] font-black uppercase tracking-widest transition-all duration-300 ${activeSection === idx ? 'opacity-100 text-sky-400' : 'opacity-0 group-hover:opacity-100 text-slate-500'}`}>
-                            {s.label}
-                        </span>
-                        <div className={`w-2.5 h-2.5 rounded-full transition-all duration-500 ${activeSection === idx ? 'bg-sky-400 scale-125 ring-4 ring-sky-400/20' : 'bg-slate-700 hover:bg-slate-500'}`}></div>
-                    </button>
-                ))}
-            </div>
+        <div className="bg-slate-50 min-h-screen text-slate-800 font-sans">
+            {/* Header */}
+            <header className="wc-header fixed top-0 w-full z-[100] transition-all">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between h-20">
+                        <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollTo('hero')}>
+                            <div className="bg-sky-600 text-white p-2 rounded-lg">
+                                <Droplets size={24} />
+                            </div>
+                            <span className="font-bold text-xl text-slate-800 tracking-tight hidden sm:block">石門水庫水源地永續計畫</span>
+                            <span className="font-bold text-xl text-slate-800 tracking-tight sm:hidden">水源永續計畫</span>
+                        </div>
+                        
+                        {/* Desktop Nav */}
+                        <nav className="hidden md:flex items-center gap-8">
+                            {navLinks.map(link => (
+                                <button 
+                                    key={link.id} 
+                                    onClick={() => scrollTo(link.id)}
+                                    className={`wc-nav-link text-[15px] ${activeSection === link.id ? 'active' : ''}`}
+                                >
+                                    {link.label}
+                                </button>
+                            ))}
+                            <a href={`mailto:${content.footer.contactEmail}`} className="px-5 py-2.5 bg-sky-600 text-white font-medium rounded-md hover:bg-sky-700 transition-colors shadow-sm">
+                                聯絡我們
+                            </a>
+                        </nav>
 
-            {/* 1. Cinematic Hero */}
-            <section id="hero" className="wc-snap-section bg-slate-950 flex flex-col items-center justify-center">
-                <div className="absolute inset-0 bg-cover bg-center transition-transform duration-[3s] scale-110" style={{ backgroundImage: 'url("/shimen_hero.png")' }}>
-                    <div className="absolute inset-0 wc-hero-overlay"></div>
-                </div>
-                <div className="relative z-10 flex flex-col items-center justify-center flex-1 w-full px-6 text-center">
-                    <div className="max-w-5xl wc-animate-fade-up">
-                        <div className="mb-10 inline-flex p-3 rounded-2xl bg-sky-500/10 border border-sky-400/20 backdrop-blur-md">
-                            <Droplets className="text-sky-400 h-8 w-8" />
+                        {/* Mobile Menu Button */}
+                        <div className="flex items-center md:hidden">
+                            <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-slate-600 p-2">
+                                {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+                            </button>
                         </div>
-                        <h1 className="text-white text-3xl md:text-[8rem] font-black leading-tight md:leading-[0.9] tracking-tighter mb-6 md:mb-10 wc-text-glow break-words" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle.replace(/[:：]/g, '') }}></h1>
-                        <div className="text-sky-100/60 text-lg md:text-3xl font-light leading-relaxed max-w-3xl mx-auto mb-10 md:mb-20">
-                            <p className="block">跨界合作守護北台灣生命之源</p>
-                            <p className="block">推動集水區友善農業與水質保育</p>
-                        </div>
-                        <a href={`mailto:${content.footer.contactEmail}`} className="inline-flex items-center gap-4 md:gap-6 px-8 py-4 md:px-12 md:py-8 bg-sky-500 text-white rounded-full font-bold text-lg md:text-2xl shadow-2xl hover:bg-sky-400 hover:scale-105 transition-all">
-                            立即參與計畫 <ArrowRight size={24} />
-                        </a>
                     </div>
                 </div>
-                <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center opacity-30">
-                    <ChevronDown className="animate-bounce h-8 w-8" />
+                
+                {/* Mobile Nav */}
+                {mobileMenuOpen && (
+                    <div className="md:hidden bg-white border-b border-slate-200 shadow-lg absolute w-full">
+                        <div className="px-4 pt-2 pb-6 space-y-2">
+                            {navLinks.map(link => (
+                                <button 
+                                    key={link.id}
+                                    onClick={() => scrollTo(link.id)}
+                                    className="block w-full text-left px-4 py-3 text-base font-medium text-slate-700 hover:text-sky-600 hover:bg-sky-50 rounded-md"
+                                >
+                                    {link.label}
+                                </button>
+                            ))}
+                            <a href={`mailto:${content.footer.contactEmail}`} className="block w-full text-center mt-4 px-4 py-3 bg-sky-600 text-white font-medium rounded-md">
+                                聯絡我們
+                            </a>
+                        </div>
+                    </div>
+                )}
+            </header>
+
+            {/* Hero Section */}
+            <section id="hero" className="wc-hero wc-section-alt pt-20">
+                <div className="wc-hero-bg"></div>
+                <div className="max-w-7xl mx-auto px-6 lg:px-8 w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center relative z-10">
+                    <div className="wc-hero-content wc-fade-in">
+                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-bold mb-6">
+                            <Mountain size={16} /> 北台灣生命之源
+                        </div>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight mb-6" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle }}></h1>
+                        <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed" dangerouslySetInnerHTML={{ __html: `${content.homePage.heroSubtitle}<br/>${content.homePage.heroDescription}` }} />
+                        <div className="flex flex-wrap gap-4">
+                            <button onClick={() => scrollTo('impact')} className="px-8 py-3.5 bg-sky-600 text-white font-medium rounded-md shadow-md hover:bg-sky-700 hover:shadow-lg transition-all flex items-center gap-2">
+                                觀看計畫成果 <ArrowRight size={18} />
+                            </button>
+                            <button onClick={() => scrollTo('story')} className="px-8 py-3.5 bg-white text-slate-700 border border-slate-300 font-medium rounded-md hover:bg-slate-50 transition-all">
+                                了解更多
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
-            {/* 2. Story & Facts Section */}
-            <section id="story" className="wc-snap-section bg-slate-50 text-slate-900 px-6 py-16 md:p-20 justify-center">
-                <div className="max-w-xl mx-auto relative z-10">
-                    <div className="flex items-center gap-4 mb-6">
-                        <div className="h-1.5 w-16 bg-sky-500 rounded-full"></div>
-                        <span className="text-sky-600 font-black text-xs tracking-[0.3em] uppercase">認識水庫</span>
-                    </div>
-                    <h2 className="text-4xl font-black text-slate-900 mb-8 leading-tight">{content.homePage.reservoirTitle}</h2>
-
-                    <div className="bg-white p-8 rounded-[2.5rem] shadow-xl shadow-slate-200 border border-slate-100 mb-10 flex gap-6 items-center">
-                        <div className="p-4 bg-sky-100 rounded-3xl text-sky-600 shrink-0">
-                            <Mountain size={40} />
+            {/* Story Section */}
+            <section id="story" className="wc-section wc-section-light">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+                        <div>
+                            <h2 className="wc-section-title">{content.homePage.reservoirTitle}</h2>
+                            <h3 className="text-2xl font-bold text-slate-800 mb-6">{content.homePage.reservoirSubtitle}</h3>
+                            <p className="text-slate-600 text-lg leading-loose mb-8">
+                                {content.homePage.reservoirDescription}
+                            </p>
                         </div>
-                        <p className="text-sky-900 font-bold leading-relaxed italic text-lg">
-                            "{content.homePage.reservoirSubtitle}"
-                        </p>
-                    </div>
-
-                    <p className="text-slate-600 text-lg leading-[2] mb-12">
-                        {content.homePage.reservoirDescription}
-                    </p>
-
-                    <div className="grid grid-cols-2 gap-6">
-                        <div className="bg-white p-8 rounded-[2.5rem] shadow-md border border-slate-50">
-                            <p className="text-4xl font-black text-sky-500 mb-1 tracking-tighter">{content.impact.reservoirArea}</p>
-                            <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">集水區面積 (km²)</p>
-                        </div>
-                        <div className="bg-white p-8 rounded-[2.5rem] shadow-md border border-slate-50">
-                            <p className="text-4xl font-black text-sky-500 mb-1 tracking-tighter">{content.impact.population}</p>
-                            <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest">供水人口 (萬)</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            {/* 3. Impact Section (Bento Grid) */}
-            <section id="impact" className="wc-snap-section bg-slate-950 px-6 pt-16 pb-24">
-                <div className="max-w-7xl mx-auto w-full relative z-10">
-                    <div className="text-center mb-16">
-                        <h2 className="text-5xl md:text-7xl font-black text-white mb-4">永續影響力成果</h2>
-                        <p className="text-slate-500 text-xl font-medium">數據見證守護水源的真實足跡</p>
-                    </div>
-
-                    <div className="wc-bento-grid">
-                        <div className="col-span-12 md:col-span-8 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card">
-                            <div className="flex justify-between items-start mb-12">
-                                <div className="p-4 bg-sky-500/20 text-sky-400 rounded-3xl"><BarChart3 size={32} /></div>
-                                <span className="text-xs font-black text-sky-500/50 uppercase tracking-[0.3em]">Cumulative Area</span>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                            <div className="wc-card p-8 border-l-4 border-l-sky-500">
+                                <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">集水區面積 (km²)</p>
+                                <p className="text-5xl font-black text-sky-600">{content.impact.reservoirArea}</p>
                             </div>
-                            <div>
-                                <p className="text-5xl md:text-7xl font-black text-white leading-none mb-4">
-                                    <CountUpNumber value={content.impact.totalArea} decimals={1} />
-                                </p>
-                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">已推動總面積 (公頃)</p>
-                            </div>
-                        </div>
-
-                        <div className="col-span-12 md:col-span-4 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card bg-sky-500/10">
-                            <div className="flex justify-between items-start mb-12">
-                                <div className="p-4 bg-sky-500 text-white rounded-3xl"><Building2 size={32} /></div>
-                            </div>
-                            <div>
-                                <p className="text-5xl md:text-7xl font-black text-white mb-2"><CountUpNumber value={corpData.length} /></p>
-                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">支持企業數 (家)</p>
-                            </div>
-                        </div>
-
-                        <div className="col-span-12 md:col-span-5 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="p-4 bg-emerald-500/20 text-emerald-400 rounded-3xl"><FlaskConical size={32} /></div>
-                                <span className="text-emerald-400/50 text-[10px] font-black tracking-widest uppercase">Water Quality</span>
-                            </div>
-                            <div>
-                                <p className="text-5xl md:text-7xl font-black text-emerald-400 mb-2"><CountUpNumber value={content.impact.phosphorus} decimals={1} />%</p>
-                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">總磷削減率推估</p>
-                            </div>
-                        </div>
-
-                        <div className="col-span-12 md:col-span-7 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="p-4 bg-indigo-500/20 text-indigo-400 rounded-3xl"><Trees size={32} /></div>
-                                <span className="text-indigo-400/50 text-[10px] font-black tracking-widest uppercase">Climate Potential</span>
-                            </div>
-                            <div>
-                                <p className="text-5xl md:text-7xl font-black text-indigo-400 mb-2"><CountUpNumber value={content.impact.carbon} /> <span className="text-xl">tons</span></p>
-                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">年減碳潛力貢獻</p>
-                            </div>
-                        </div>
-
-                        <div className="col-span-12 md:col-span-6 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card bg-amber-500/10">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="p-4 bg-amber-500/20 text-amber-400 rounded-3xl"><Target size={32} /></div>
-                                <span className="text-amber-400/50 text-[10px] font-black tracking-widest uppercase">Community Assoc</span>
-                            </div>
-                            <div>
-                                <p className="text-5xl md:text-7xl font-black text-amber-400 mb-2"><CountUpNumber value={content.impact.communityAssociations} /></p>
-                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">合作社區發展協會 (個)</p>
-                            </div>
-                        </div>
-
-                        <div className="col-span-12 md:col-span-6 wc-glass wc-glass-premium p-12 rounded-[3.5rem] flex flex-col justify-between wc-bento-card bg-purple-500/10">
-                            <div className="flex justify-between items-start mb-8">
-                                <div className="p-4 bg-purple-500/20 text-purple-400 rounded-3xl"><Globe size={32} /></div>
-                                <span className="text-purple-400/50 text-[10px] font-black tracking-widest uppercase">Community College</span>
-                            </div>
-                            <div>
-                                <p className="text-5xl md:text-7xl font-black text-purple-400 mb-2"><CountUpNumber value={content.impact.communityColleges} /></p>
-                                <p className="text-base md:text-lg font-bold text-slate-400 uppercase tracking-widest">合作社區大學 (所)</p>
+                            <div className="wc-card p-8 border-l-4 border-l-teal-500">
+                                <p className="text-sm font-bold text-slate-500 uppercase tracking-wider mb-2">供水人口 (萬)</p>
+                                <p className="text-5xl font-black text-teal-600">{content.impact.population}</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* 4. Partner Farms Section */}
-            <section id="farmers" className="wc-snap-section bg-slate-50 flex items-center justify-center px-6 pt-32 pb-24">
-                <div className="max-w-7xl mx-auto w-full relative z-10">
-                    <div className="mb-20 text-center">
-                        <div className="flex items-center justify-center gap-4 mb-4">
-                            <div className="h-1.5 w-12 bg-sky-500 rounded-full"></div>
-                            <span className="text-sky-600 font-black text-xs tracking-[0.3em] uppercase">Practice Side</span>
-                            <div className="h-1.5 w-12 bg-sky-500 rounded-full"></div>
+            {/* Impact Dashboard */}
+            <section id="impact" className="wc-section wc-section-alt">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">永續影響力成果</h2>
+                        <p className="text-lg text-slate-500">數據見證守護水源的真實足跡</p>
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="wc-stat-card border-t-4 border-t-sky-500">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <p className="text-sm font-bold text-slate-500">已推動總面積 (公頃)</p>
+                                    <p className="wc-stat-value text-sky-600"><CountUpNumber value={content.impact.totalArea} decimals={1} /></p>
+                                </div>
+                                <div className="wc-stat-icon bg-sky-50 text-sky-600"><BarChart3 size={24} /></div>
+                            </div>
                         </div>
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-950 mb-6">合作農場</h2>
-                        <p className="text-lg text-slate-500 font-medium max-w-2xl mx-auto">從耕作到保育，他們在第一線守護北台灣的水源。</p>
+                        <div className="wc-stat-card border-t-4 border-t-teal-500">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <p className="text-sm font-bold text-slate-500">總磷削減率推估 (%)</p>
+                                    <p className="wc-stat-value text-teal-600"><CountUpNumber value={content.impact.phosphorus} decimals={1} /></p>
+                                </div>
+                                <div className="wc-stat-icon bg-teal-50 text-teal-600"><FlaskConical size={24} /></div>
+                            </div>
+                        </div>
+                        <div className="wc-stat-card border-t-4 border-t-emerald-500">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <p className="text-sm font-bold text-slate-500">年減碳潛力貢獻 (tons)</p>
+                                    <p className="wc-stat-value text-emerald-600"><CountUpNumber value={content.impact.carbon} /></p>
+                                </div>
+                                <div className="wc-stat-icon bg-emerald-50 text-emerald-600"><Trees size={24} /></div>
+                            </div>
+                        </div>
+                        
+                        <div className="wc-stat-card border-t-4 border-t-amber-500">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <p className="text-sm font-bold text-slate-500">合作社區發展協會 (個)</p>
+                                    <p className="wc-stat-value text-amber-500"><CountUpNumber value={content.impact.communityAssociations} /></p>
+                                </div>
+                                <div className="wc-stat-icon bg-amber-50 text-amber-500"><Target size={24} /></div>
+                            </div>
+                        </div>
+                        <div className="wc-stat-card border-t-4 border-t-purple-500">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <p className="text-sm font-bold text-slate-500">合作社區大學 (所)</p>
+                                    <p className="wc-stat-value text-purple-600"><CountUpNumber value={content.impact.communityColleges} /></p>
+                                </div>
+                                <div className="wc-stat-icon bg-purple-50 text-purple-600"><Globe size={24} /></div>
+                            </div>
+                        </div>
+                        <div className="wc-stat-card border-t-4 border-t-blue-500">
+                            <div className="flex justify-between items-start mb-4">
+                                <div>
+                                    <p className="text-sm font-bold text-slate-500">支持企業數 (家)</p>
+                                    <p className="wc-stat-value text-blue-600"><CountUpNumber value={corpData.length} /></p>
+                                </div>
+                                <div className="wc-stat-icon bg-blue-50 text-blue-600"><Building2 size={24} /></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Farmers Section */}
+            <section id="farmers" className="wc-section wc-section-light">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="flex flex-col md:flex-row justify-between items-end mb-10 gap-4">
+                        <div>
+                            <h2 className="wc-section-title">合作農場</h2>
+                            <p className="text-slate-600">從耕作到保育，他們在第一線守護北台灣的水源。</p>
+                        </div>
                     </div>
                     
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
                         {farmerData.map((farmer) => (
                             <div
                                 key={farmer.id}
                                 onClick={() => setSelectedFarmer(farmer)}
-                                className="cursor-pointer group relative overflow-hidden rounded-2xl aspect-square shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-xl bg-slate-200"
+                                className="wc-card cursor-pointer group"
                             >
-                                <img 
-                                    src={farmer.imageUrls?.[0] || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop'} 
-                                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
-                                    alt={farmer.name}
-                                    onError={(e) => {
-                                        (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop';
-                                    }}
-                                />
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent p-4 flex flex-col justify-end">
-                                    <h3 className="text-white font-black text-sm md:text-lg leading-tight">{farmer.name}</h3>
-                                    <p className="text-white/40 text-[10px] font-bold uppercase tracking-widest mt-1 flex items-center gap-1"><MapPin size={10} /> {farmer.district}</p>
+                                <div className="aspect-[4/3] overflow-hidden">
+                                    <img 
+                                        src={farmer.imageUrls?.[0] || 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop'} 
+                                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" 
+                                        alt={farmer.name}
+                                        onError={(e) => {
+                                            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?q=80&w=800&auto=format&fit=crop';
+                                        }}
+                                    />
+                                </div>
+                                <div className="p-4 bg-white border-t border-slate-100 flex items-center justify-between">
+                                    <div>
+                                        <h3 className="font-bold text-slate-800">{farmer.name}</h3>
+                                        <p className="text-xs text-slate-500 flex items-center gap-1 mt-1"><MapPin size={12} /> {farmer.district}</p>
+                                    </div>
+                                    <ChevronRight size={16} className="text-slate-300 group-hover:text-sky-500 transition-colors" />
                                 </div>
                             </div>
                         ))}
@@ -447,36 +344,35 @@ const WaterConservation: React.FC = () => {
                 </div>
             </section>
 
-            {/* 5. Supporting Corporations Section */}
-            <section id="corps" className="wc-snap-section bg-white flex items-center justify-center px-6 pt-32 pb-24 overflow-y-auto">
-                <div className="max-w-7xl mx-auto w-full text-center relative z-10">
-                    <div className="mb-16">
-                        <span className="text-slate-400 font-black text-xs tracking-[0.3em] uppercase mb-4 block">Success Story</span>
-                        <h2 className="text-4xl md:text-5xl font-black text-slate-950 mb-6">支持企業</h2>
-                        <div className="h-1.5 w-20 bg-sky-500 mx-auto rounded-full"></div>
+            {/* Corporations Section */}
+            <section id="corps" className="wc-section wc-section-alt border-t border-slate-200">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="text-center mb-12">
+                        <h2 className="text-3xl md:text-4xl font-black text-slate-900 mb-4">響應企業</h2>
+                        <p className="text-slate-500">攜手投入石門水庫水源保育行動</p>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-8">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
                         {corpData.map(corp => (
                             <div 
                                 key={corp.id} 
                                 onClick={() => setSelectedCorp(corp)} 
-                                className="group cursor-pointer flex flex-col items-center"
+                                className="cursor-pointer group relative"
                             >
-                                <div className="wc-logo-item aspect-square w-full flex items-center justify-center p-6 bg-slate-50 rounded-2xl group-hover:bg-sky-50 transition-all border border-slate-100">
-                                    {corp.logoUrl ? (
-                                        <img 
-                                            src={corp.logoUrl} 
-                                            className="max-w-[90%] max-h-[90%] object-contain mix-blend-multiply" 
-                                            alt={corp.name} 
-                                        />
-                                    ) : (
-                                        <div className="text-center p-2">
-                                            <span className="text-xs font-black text-slate-400 group-hover:text-sky-600 transition-colors uppercase leading-tight">
-                                                {corp.name}
-                                            </span>
+                                <div className="wc-logo-container relative overflow-hidden flex flex-col justify-center items-center">
+                                    <div className="w-full h-full flex items-center justify-center transform transition-transform duration-300 group-hover:-translate-y-3">
+                                        {corp.logoUrl ? (
+                                            <img src={corp.logoUrl} alt={corp.name} />
+                                        ) : (
+                                            <span className="font-bold text-sm text-slate-400 text-center">{corp.name}</span>
+                                        )}
+                                    </div>
+                                    {/* Hover Name Slide-Up */}
+                                    <div className="absolute bottom-0 left-0 right-0 p-2 transform translate-y-full opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                                        <div className="bg-white/95 backdrop-blur-md border border-slate-100 shadow-sm rounded-md py-1.5 px-2 flex justify-center">
+                                            <span className="text-slate-800 font-bold text-xs md:text-sm text-center truncate">{corp.name}</span>
                                         </div>
-                                    )}
+                                    </div>
                                 </div>
                             </div>
                         ))}
@@ -484,35 +380,35 @@ const WaterConservation: React.FC = () => {
                 </div>
             </section>
 
-            {/* 6. Footer & CTA Section - Restored to Previous Detailed Style */}
-            <section id="join" className="wc-snap-section bg-slate-950 text-white p-12 justify-center">
-                <div className="max-w-xl mx-auto text-center relative z-10">
-                    <div className="inline-block p-5 bg-sky-500/10 rounded-[2rem] border border-sky-500/20 mb-10">
-                        <Droplets className="h-12 w-12 text-sky-400" />
-                    </div>
-                    <h2 className="text-4xl font-black mb-8 leading-tight tracking-tighter text-white">為下一代守護<br />每一滴純淨水源</h2>
-                    <p className="text-slate-400 text-lg leading-relaxed mb-16 font-medium">
-                        {content.footer.aboutUs}
-                    </p>
-
-                    <div className="flex flex-col gap-4 max-w-sm mx-auto">
-                        <a href={`mailto:${content.footer.contactEmail}`} className="flex items-center justify-center gap-4 py-6 bg-sky-500 text-white rounded-[2rem] font-black text-xl shadow-[0_30px_60px_rgba(14,165,233,0.3)] active:scale-95 transition-all no-underline">
-                            <Mail size={24} /> 聯繫合作專員
-                        </a>
-                    </div>
-
-                    <div className="mt-24 pt-12 border-t border-white/5 text-[10px] font-black text-white/20 tracking-[0.8em] uppercase" dangerouslySetInnerHTML={{ __html: content.footer.copyright }}>
+            {/* Footer */}
+            <footer id="join" className="bg-slate-900 text-slate-300 py-16 border-t-4 border-sky-600">
+                <div className="max-w-7xl mx-auto px-6 lg:px-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                        <div>
+                            <div className="flex items-center gap-2 text-white mb-6">
+                                <Droplets size={24} className="text-sky-400" />
+                                <span className="font-bold text-xl">石門水庫水源地永續計畫</span>
+                            </div>
+                            <p className="text-slate-400 leading-relaxed mb-8 max-w-md">
+                                {content.footer.aboutUs}
+                            </p>
+                            <a href={`mailto:${content.footer.contactEmail}`} className="inline-flex items-center gap-2 px-6 py-3 bg-sky-600 text-white font-medium rounded-md hover:bg-sky-500 transition-colors">
+                                <Mail size={18} /> 聯絡合作專員
+                            </a>
+                        </div>
+                        <div className="flex flex-col md:items-end justify-between">
+                            <div className="space-y-2 text-sm text-slate-400 md:text-right">
+                                <p>聯絡信箱：{content.footer.contactEmail}</p>
+                            </div>
+                            <div className="mt-12 text-xs text-slate-600" dangerouslySetInnerHTML={{ __html: content.footer.copyright }}></div>
+                        </div>
                     </div>
                 </div>
-            </section>
+            </footer>
 
-
-
-            {/* Modals Stacking */}
-            <div className="fixed z-[999]">
-                {selectedFarmer && <FarmerDetailModal farmer={selectedFarmer} onClose={() => setSelectedFarmer(null)} />}
-                {selectedCorp && <CorporationDetailModal corporation={selectedCorp} partnerships={partnershipData.filter(p => p.corporationId === selectedCorp.id)} getFarmerName={getFarmerName} onClose={() => setSelectedCorp(null)} />}
-            </div>
+            {/* Modals */}
+            {selectedFarmer && <FarmerDetailModal farmer={selectedFarmer} onClose={() => setSelectedFarmer(null)} />}
+            {selectedCorp && <CorporationDetailModal corporation={selectedCorp} partnerships={partnershipData.filter(p => p.corporationId === selectedCorp.id)} getFarmerName={fId => farmerData.find(f => f.id === fId)?.name || ''} onClose={() => setSelectedCorp(null)} />}
         </div>
     );
 };
