@@ -266,7 +266,7 @@ const WaterConservation: React.FC = () => {
                         <div className="wc-stat-card border-t-4 border-t-emerald-500">
                             <div className="flex justify-between items-start mb-4">
                                 <div>
-                                    <p className="text-sm font-bold text-slate-500">年減碳潛力貢獻 (kg/公頃)</p>
+                                    <p className="text-sm font-bold text-slate-500">年減碳潛力貢獻 (kgCO2e/公頃)</p>
                                     <p className="wc-stat-value text-emerald-600"><CountUpNumber value={content.impact.carbon} /></p>
                                 </div>
                                 <div className="wc-stat-icon bg-emerald-50 text-emerald-600"><Trees size={24} /></div>
