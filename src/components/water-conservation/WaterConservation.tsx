@@ -139,7 +139,7 @@ const WaterConservation: React.FC = () => {
                             <div className="bg-sky-600 text-white p-2 rounded-lg">
                                 <Droplets size={24} />
                             </div>
-                            <span className="font-bold text-xl text-slate-800 tracking-tight hidden sm:block">石門水庫：跨域共好 水源守護</span>
+                            <span className="font-bold text-xl text-slate-800 tracking-tight hidden sm:block">跨域共好 水源守護</span>
                             <span className="font-bold text-xl text-slate-800 tracking-tight sm:hidden">水源永續計畫</span>
                         </div>
                         
@@ -387,7 +387,7 @@ const WaterConservation: React.FC = () => {
                         <div>
                             <div className="flex items-center gap-2 text-white mb-6">
                                 <Droplets size={24} className="text-sky-400" />
-                                <span className="font-bold text-xl">石門水庫：跨域共好 水源守護</span>
+                                <span className="font-bold text-xl">跨域共好 水源守護</span>
                             </div>
                             <p className="text-slate-400 leading-relaxed mb-8 max-w-md">
                                 {content.footer.aboutUs}
