@@ -139,7 +139,7 @@ const WaterConservation: React.FC = () => {
                             <div className="bg-sky-600 text-white p-2 rounded-lg">
                                 <Droplets size={24} />
                             </div>
-                            <span className="font-bold text-xl text-slate-800 tracking-tight hidden sm:block">石門水庫水源地永續計畫</span>
+                            <span className="font-bold text-xl text-slate-800 tracking-tight hidden sm:block">石門水庫：跨域共好 水源守護</span>
                             <span className="font-bold text-xl text-slate-800 tracking-tight sm:hidden">水源永續計畫</span>
                         </div>
                         
@@ -197,7 +197,7 @@ const WaterConservation: React.FC = () => {
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-bold mb-6">
                             <Mountain size={16} /> 北台灣生命之源
                         </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight mb-6" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle }}></h1>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight mb-6">石門水庫：跨域共好 水源守護</h1>
                         <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed" dangerouslySetInnerHTML={{ __html: `${content.homePage.heroSubtitle}<br/>${content.homePage.heroDescription}` }} />
                         <div className="flex flex-wrap gap-4">
                             <button onClick={() => scrollTo('impact')} className="px-8 py-3.5 bg-sky-600 text-white font-medium rounded-md shadow-md hover:bg-sky-700 hover:shadow-lg transition-all flex items-center gap-2">
@@ -387,7 +387,7 @@ const WaterConservation: React.FC = () => {
                         <div>
                             <div className="flex items-center gap-2 text-white mb-6">
                                 <Droplets size={24} className="text-sky-400" />
-                                <span className="font-bold text-xl">石門水庫水源地永續計畫</span>
+                                <span className="font-bold text-xl">石門水庫：跨域共好 水源守護</span>
                             </div>
                             <p className="text-slate-400 leading-relaxed mb-8 max-w-md">
                                 {content.footer.aboutUs}
