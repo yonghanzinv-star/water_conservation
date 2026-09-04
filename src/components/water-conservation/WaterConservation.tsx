@@ -197,7 +197,7 @@ const WaterConservation: React.FC = () => {
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-sm font-bold mb-6">
                             <Mountain size={16} /> 北台灣生命之源
                         </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight mb-6" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle }}></h1>
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-black text-slate-900 leading-tight mb-6" dangerouslySetInnerHTML={{ __html: content.homePage.heroTitle.replace('水源地永續計畫', '跨域共好 水源守護') }}></h1>
                         <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed" dangerouslySetInnerHTML={{ __html: `${content.homePage.heroSubtitle}<br/>${content.homePage.heroDescription}` }} />
                         <div className="flex flex-wrap gap-4">
                             <button onClick={() => scrollTo('impact')} className="px-8 py-3.5 bg-sky-600 text-white font-medium rounded-md shadow-md hover:bg-sky-700 hover:shadow-lg transition-all flex items-center gap-2">
